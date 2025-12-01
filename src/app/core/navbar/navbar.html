@@ -1,0 +1,53 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning border border-1-black">
+    <div class="container-fluid d-flex align-items-center">
+
+        <!-- Search + Toggler wrapper -->
+        <div class="d-flex w-100 align-items-center justify-content-between">
+
+            <!-- Search bar -->
+            <form class="d-flex bg-light rounded border flex-shrink-1 me-2" role="search"
+                style="overflow: hidden; min-width: 100px; max-width: 300px;">
+                <input class="form-control border-0" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-light border-0" type="submit">
+                    <i class="bi bi-search text-dark"></i>
+                </button>
+            </form>
+
+            <!-- Navbar toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+
+        <!-- Offcanvas menu -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"><i class="bi bi-moon-fill text-dark"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" routerLink="/settings"><i
+                                class="bi bi-gear-fill text-dark"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <img src="https://img.freepik.com/free-vector/cat-mascot-black-isolated-illustration_18591-83411.jpg"
+                                alt="Admin" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                            <span class="text-dark">Admin</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>

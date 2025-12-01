@@ -1,0 +1,10 @@
+<div class="card h-100">
+  <div class="card-body d-flex flex-column">
+    <p class="card-title">Proposal ID:{{ proposal._id }}</p>
+    <p class="card-subtitle mb-2 text-muted">Freelancer Email: {{ proposal.freelancer.email }}</p>
+    <p class="card-text flex-grow-1">Client Email: {{ proposal.job.client.email }}</p>
+    <p class="card-text flex-grow-1">Cover Letter: {{ proposal.coverLetter }}</p>
+
+    <a href="#" class="btn btn-primary btn-sm mt-auto">View Proposal</a>
+  </div>
+</div>

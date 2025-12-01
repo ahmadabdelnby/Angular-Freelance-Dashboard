@@ -1,0 +1,17 @@
+<nav class="bg-light border-end vh-100 p-3" style="width: 250px;">
+  <!-- Sidebar Title -->
+  <h4 class="mb-4">Collections</h4>
+
+  <!-- Collection Names -->
+  <ul class="list-unstyled">
+    <li *ngFor="let collection of collections" class="py-2">
+      <button type="button" (click)="selectCollection(collection)" class="d-block text-decoration-none text-dark">{{ collection | capitalize }}</button>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
