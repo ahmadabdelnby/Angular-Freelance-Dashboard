@@ -1,5 +1,5 @@
 import { Component, inject, Injector, Input, OnChanges } from '@angular/core';
-import { CollectionService } from '../../services/collection-service';
+import { CollectionService } from '../../services/collectionServices/collection-service';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { componentRegistry } from '../../configs/component-registry';

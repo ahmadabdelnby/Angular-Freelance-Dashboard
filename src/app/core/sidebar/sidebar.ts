@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CollectionService } from '../../services/collection-service';
+import { CollectionService } from '../../services/collectionServices/collection-service';
 import { CommonModule } from '@angular/common';
 import { CapitalizePipe } from '../../pipes/capitalize-pipe';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';

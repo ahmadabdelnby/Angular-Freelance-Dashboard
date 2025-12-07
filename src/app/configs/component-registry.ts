@@ -13,4 +13,6 @@ export const componentRegistry: {
     .then(m => m.UserCard),
   portfolioitems: () => import('../core/cards/portfolio-card/portfolio-card')
     .then(m => m.PortfolioCard),
+  contracts: () => import('../core/cards/contract-card/contract-card')
+    .then(m => m.ContractCard),
 };

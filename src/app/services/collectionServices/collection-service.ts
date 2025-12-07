@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CollectionService {
-  private apiUrl = 'http://localhost:5000/api/admin'; // backend endpoint
+  private apiUrl = 'http://localhost:3000/Freelancing/api/v1/admin'; // backend endpoint
 
   constructor(private http: HttpClient) { }
 
