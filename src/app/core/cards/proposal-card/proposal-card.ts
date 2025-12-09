@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 
 @Component({
   selector: 'app-proposal-card',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './proposal-card.html',
   styleUrl: './proposal-card.scss',
 })

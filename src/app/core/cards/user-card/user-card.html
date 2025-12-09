@@ -1,7 +1,21 @@
-<div class="card h-100">
+<!-- <div class="card h-100">
   <div class="card-body d-flex flex-column">
-    <p class="card-title">User ID:{{ user._id }}</p>
-    <p class="card-subtitle mb-2 text-muted">User Email: {{ user.email }}</p>
-    <a href="#" class="btn btn-primary btn-sm mt-auto">View User</a>
+    <p class="card-title text-muted"><strong>User ID:</strong> {{ user._id }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>User Email:</strong> {{ user.email }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <a href="#" class="btn btn-secondary btn-sm mt-auto">View User</a>
+  </div>
+</div> -->
+
+<div class="card h-100" style="min-width: 350px; max-width: 400px;">
+  <div class="card-body d-flex flex-column">
+    <p class="card-title text-muted"><strong>User ID:</strong> {{ user._id }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>User Email:</strong> {{ user.email }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <!-- <a href="#" class="btn btn-secondary btn-sm mt-auto">View User</a> -->
+    <button class="btn btn-secondary btn-sm ">View User</button>
+    <button class="btn btn-danger btn-sm" (click)="onDeleteClick()">Delete</button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-skill-card',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './skill-card.scss',
 })
 export class SkillCard {
-
+   constructor(@Inject('data') public skills: any) {} 
 }
