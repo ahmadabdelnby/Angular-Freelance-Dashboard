@@ -1,9 +1,17 @@
 <div class="card h-100">
   <div class="card-body d-flex flex-column">
-    <p class="card-title">Contract ID: {{ contracts._id }}</p>
-    <!-- <p class="card-subtitle mb-2 text-muted">Category Name: {{ category.name }}</p> -->
-    <a href="#" class="btn btn-primary btn-sm mt-auto">View Contract</a>
+    <p class="card-title text-muted"><strong>Contract ID:</strong> {{ contracts._id }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Client Email:</strong> {{ contracts.client.email }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Freelancer Email:</strong> {{ contracts.freelancer.email }}</p>
+    <!--consider using the status badge in the modal when viewing the details-->
+    <p class="card-subtitle mb-2 text-muted"><strong>Status: </strong> <span class="badge" [ngClass]="{
+      'bg-primary': contracts.status === 'active',
+      'bg-warning': contracts.status === 'paused',
+      'bg-success': contracts.status === 'completed',
+      'bg-danger': contracts.status === 'terminated'
+    }">
+        {{ contracts.status | titlecase }}
+      </span></p>
+    <a href="#" class="btn btn-secondary btn-sm mt-auto">View Details</a>
   </div>
 </div>
-
-

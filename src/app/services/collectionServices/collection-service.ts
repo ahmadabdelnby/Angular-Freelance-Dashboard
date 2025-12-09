@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CollectionService {
+  deleteDoc(arg0: string, docId: string) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://localhost:3000/Freelancing/api/v1/admin'; // backend endpoint
 
   constructor(private http: HttpClient) { }
