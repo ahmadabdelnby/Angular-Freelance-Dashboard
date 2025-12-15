@@ -3,7 +3,7 @@ export const componentRegistry: {
 } = {
   proposals: () => import('../core/cards/proposal-card/proposal-card')
     .then(m => m.ProposalCard),
-  specialities: () => import('../core/cards/speciality-card/speciality-card')
+  specialties: () => import('../core/cards/speciality-card/speciality-card')
     .then(m => m.SpecialityCard),
   categories: () => import('../core/cards/category-card/category-card')
     .then(m => m.CategoryCard),

@@ -24,7 +24,20 @@ export class SkillService {
     return this.http.post<any>(
       `${this.apiUrl}`,
       skillData,
-      this.getAuthHeaders()
+      // this.getAuthHeaders()
     );
   }
+
+  // Delete a user by ID
+  deleteSkill(skillId: string): Observable<any> {
+    // Include token for auth if needed
+    //const token = localStorage.getItem('token') || ''; //this will be replaced by the real token in cookies or localStorage
+
+    return this.http.delete<any>(`${this.apiUrl}/${skillId}`);
+  }
+
+   updateSkill(skillId: string, data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${skillId}`, data);
+  }
+
 }

@@ -17,7 +17,7 @@ export class UserService {
 
     return this.http.delete<any>(`${this.apiUrl}/${userId}`, {
       headers: {
-        Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGI2NGQ5MjZkMTRhOTcwZmE2MmQzZSIsImVtYWlsIjoicmFkd2FAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY1Mjc0NjU5LCJleHAiOjE3NjUzNjEwNTl9.T8OrzNaYJWks5olIcNQ2llu0sH1NW2WAMaLOxwaiySM` //this should be a dynamic token ${token}
+        Authorization: `` //this should be a dynamic token ${token}
       }
     });
   }
