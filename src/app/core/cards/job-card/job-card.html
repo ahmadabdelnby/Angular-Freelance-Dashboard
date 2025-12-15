@@ -1,10 +1,14 @@
-<div class="card h-100">
+<div class="card h-100" style="min-width: 350px; max-width: 400px;">
   <div class="card-body d-flex flex-column">
-    <p class="card-title">Job ID:{{ job._id }}</p>
-    <p class="card-subtitle mb-2 text-muted">: Client Email: {{ job.client.email}}</p>
-    <p class="card-text flex-grow-1">Job Title: {{ job.title }}</p>
-    <p class="card-text flex-grow-1">Job Description: {{ job.description }}</p>
+    <p class="card-title text-muted"><strong>Job ID:</strong> {{ job._id }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Client Email:</strong> {{ job.client.email }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Job Title:</strong> {{ job.title }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Job Description: </strong>{{ job.description }}</p>
+    <!-- <a href="#" class="btn btn-secondary btn-sm mt-auto">View Skill</a> -->
+    <button class="btn btn-secondary btn-sm" >Update</button>
+    <button class="btn btn-danger btn-sm">Delete</button>
 
-    <a href="#" class="btn btn-primary btn-sm mt-auto">View Job</a>
   </div>
 </div>
+<!-- (click)="onUpdateClick()"
+(click)="onDeleteClick()" -->

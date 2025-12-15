@@ -18,12 +18,13 @@ export class CreateSkill {
 
   skillForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.skillForm = this.fb.group({
       name: [this.initialData?.name || '', [Validators.required, Validators.minLength(2)]],
-      specialty: [this.initialData?.specialty || '', Validators.required]
+      specialty: [this.initialData?.specialty?.toString() || '', Validators.required]
+
     });
   }
 

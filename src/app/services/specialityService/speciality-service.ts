@@ -6,21 +6,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SpecialityService {
-  private apiUrl = 'http://localhost:3000/Freelancing/api/v1/admin/specialties'; // backend endpoint
+  private apiUrl = 'http://localhost:3000/Freelancing/api/v1/specialties'; // backend endpoint
 
   constructor(private http: HttpClient) { }
-
-  // Helper to include JWT token
-  // private getAuthHeaders() {
-  //   return {
-  //     headers: new HttpHeaders({
-  //       Authorization: ``
-  //     })
-  //   };
-  // }
 
   // get all specialities
   getAllSpecialities(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
+  }
+
+  createSpeciality(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, data);
+  }
+
+  updateSpeciality(id: string, data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, data);
+  }
+
+  deleteSpeciality(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }

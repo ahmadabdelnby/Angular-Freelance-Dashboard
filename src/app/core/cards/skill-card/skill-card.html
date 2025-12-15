@@ -3,6 +3,9 @@
     <p class="card-title text-muted"><strong>Skill ID:</strong> {{ skills._id }}</p>
     <p class="card-subtitle mb-2 text-muted"><strong>Name:</strong> {{skills.name}}</p>
     <p class="card-subtitle mb-2 text-muted"><strong>Speciality:</strong> {{ skills.specialty.name }}</p>
-    <a href="#" class="btn btn-secondary btn-sm mt-auto">View Skill</a>
+    <!-- <a href="#" class="btn btn-secondary btn-sm mt-auto">View Skill</a> -->
+    <button class="btn btn-secondary btn-sm" (click)="onUpdateClick()">Update</button>
+    <button class="btn btn-danger btn-sm" (click)="onDeleteClick()">Delete</button>
+
   </div>
 </div>
