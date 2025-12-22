@@ -29,22 +29,80 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
+
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
                     <li class="nav-item">
                         <a href="#" class="nav-link"><i class="bi bi-moon-fill text-dark"></i></a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" routerLink="/settings"><i
-                                class="bi bi-gear-fill text-dark"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
+
+                    <!-- Admin profile icon -->
+                    <!-- <li *ngIf="loginService.isLoggedIn()" class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#" data-bs-toggle="modal"
+                            data-bs-target="#profileModal">
                             <img src="https://img.freepik.com/free-vector/cat-mascot-black-isolated-illustration_18591-83411.jpg"
                                 alt="Admin" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                            <span class="text-dark">Admin</span>
+                            <span class="text-dark">{{ loginService.getCurrentUser()?.username || 'Admin' }}</span>
+                        </a>
+                    </li> -->
+
+                    <!-- Modal -->
+                    <!-- <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="profileModalLabel">Admin Profile</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>First Name:</strong> {{ (loginService.user$ | async)?.first_name }}</p>
+                                    <p><strong>Last Name:</strong> {{ (loginService.user$ | async)?.last_name }}</p>
+                                    <p><strong>Username:</strong> {{ (loginService.user$ | async)?.username }}</p>
+                                    <p><strong>Email:</strong> {{ loginService.getCurrentUser()?.email }}</p>
+                                    <p><strong>Role:</strong> {{ loginService.getCurrentUser()?.role }}</p>
+                                    <p><strong>Country:</strong> {{ (loginService.user$ | async)?.country }}</p>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Profile trigger -->
+                    <li *ngIf="loginService.isLoggedIn()" class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#" data-bs-toggle="modal"
+                            data-bs-target="#profileModal">
+                            <img src="https://img.freepik.com/free-vector/cat-mascot-black-isolated-illustration_18591-83411.jpg"
+                                class="rounded-circle me-2" width="32" height="32" alt="Admin" />
+                            <span class="text-dark">
+                                {{ loginService.getCurrentUser()?.username || 'Admin' }}
+                            </span>
                         </a>
                     </li>
+
+                    <!-- Logout (optional extra) -->
+                    <li *ngIf="loginService.isLoggedIn()" class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#" (click)="loginService.logout()">
+                            <i class="bi bi-box-arrow-right text-dark me-2"></i>
+                            <span class="text-dark">Logout</span>
+                        </a>
+                    </li>
+
+
+                    <!-- Logout button, only if logged in -->
+                    <!-- <li *ngIf="loginService.isLoggedIn()" class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#" (click)="logout()">
+                            <i class="bi bi-box-arrow-right text-dark me-2"></i>
+                            <span class="text-dark">Logout</span>
+                        </a>
+                    </li> -->
+
                 </ul>
             </div>
         </div>

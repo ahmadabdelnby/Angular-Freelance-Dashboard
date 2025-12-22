@@ -214,6 +214,7 @@ import { SkillService } from '../../services/skillService/skill-service';
 import { SpecialityService } from '../../services/specialityService/speciality-service';
 import { firstValueFrom } from 'rxjs';
 import { CategoryService } from '../../services/categoryService/category-service';
+import { JobService } from '../../services/jobService/job-service';
 
 @Component({
   selector: 'app-content',
@@ -239,7 +240,8 @@ export class Content {
     private proposalService: ProposalService,
     private skillService: SkillService,
     private specialtyService: SpecialityService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private jobService: JobService
   ) { }
 
   ngOnInit() {
@@ -291,6 +293,9 @@ export class Content {
       case 'categories':
         this.categoryService.deleteCategory(docId).subscribe(() => this.fetchDocuments(this.collectionName!));
         break;
+      case 'jobs':
+        this.jobService.deleteJob(docId).subscribe(() => this.fetchDocuments(this.collectionName!));
+        break;
       default:
         alert('Delete operation not supported for this collection.');
     }
@@ -301,7 +306,8 @@ export class Content {
       providers: [
         { provide: 'data', useValue: data },
         { provide: 'deleteCallback', useValue: (id: string) => this.onDelete(id) },
-        { provide: 'updateCallback', useValue: (item: any) => this.openModal(item) }
+        { provide: 'updateCallback', useValue: (item: any) => this.openModal(item) },
+        { provide: 'viewDetailsCallback', useValue: (item: any) => this.openDetailsModal(item) }
       ],
       parent: this.injector
     });
@@ -311,6 +317,27 @@ export class Content {
 
   get canCreate(): boolean {
     return this.collectionName != null && this.creatableCollections.includes(this.collectionName);
+  }
+
+  async openDetailsModal(doc: any) {
+    if (!this.collectionName) return;
+
+    // Clear previous modal
+    this.modalContainer.clear();
+
+    const loader = ModalRegistry[this.collectionName];
+    if (!loader) return;
+
+    const ModalComponent = await loader();
+    const componentRef: ComponentRef<any> = this.modalContainer.createComponent(ModalComponent);
+
+    // Pass the doc directly
+    componentRef.instance.data = doc;
+
+    componentRef.changeDetectorRef.detectChanges();
+
+    // Handle close
+    componentRef.instance.close.subscribe(() => componentRef.destroy());
   }
 
   async openModal(initialData?: any) {

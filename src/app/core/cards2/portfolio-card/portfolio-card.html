@@ -1,0 +1,10 @@
+<div class="card h-100" style="min-width: 350px; max-width: 400px;">
+  <div class="card-body d-flex flex-column">
+    <p class="card-title text-muted"><strong>Portfolio ID:</strong> {{ data?._id }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Title:</strong> {{ data?.title }}</p>
+    <p class="card-subtitle mb-2 text-muted"><strong>Freelancer:</strong> {{ data?.freelancer?.email }}</p>
+    <button class="btn btn-secondary btn-sm" (click)="view()">View</button>
+    <button class="btn btn-danger btn-sm" (click)="delete()">Delete</button>
+
+  </div>
+</div>

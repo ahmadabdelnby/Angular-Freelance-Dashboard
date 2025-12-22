@@ -1,0 +1,19 @@
+<div class="modal-backdrop" (click)="close()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <!-- Header -->
+        <div class="modal-header d-flex justify-content-between align-items-center">
+            <h5 class="modal-title mb-3 text-decoration-underline">User Details</h5>
+            <!-- Close button -->
+            <button class="close-btn" (click)="close()">x</button>
+        </div>
+        <!-- Body -->
+        <div class="modal-body">
+            <p><strong>Portfolio ID:</strong> {{ data?._id }}</p>
+            <p><strong>Title:</strong> {{ data?.title }}</p>
+            <p><strong>Freelancer:</strong> {{ data?.freelancer?.email }}</p>
+            <p><strong>Description:</strong> {{ data?.description }}</p>
+            <p><strong>GitHub URL:</strong> <a href="{{ data?.githubUrl }}">{{ data?.githubUrl }}</a></p>
+            <p><strong>Live URL:</strong> <a href="{{ data?.liveUrl }}">{{ data?.liveUrl }}</a></p>
+        </div>
+    </div>
+</div>

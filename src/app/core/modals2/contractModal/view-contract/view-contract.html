@@ -1,0 +1,23 @@
+<div class="modal-backdrop" (click)="close()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <!-- Header -->
+        <div class="modal-header d-flex justify-content-between align-items-center">
+            <h5 class="modal-title mb-3 text-decoration-underline">Contract Details</h5>
+            <!-- Close button -->
+            <button class="close-btn" (click)="close()">x</button>
+        </div>
+        <!-- Body -->
+        <div class="modal-body">
+            <p><strong>User ID:</strong> {{ data?._id }}</p>
+            <p><strong>Job:</strong> {{ data?.job }}</p>
+            <p><strong>Client:</strong> {{ data?.client.email }}</p>
+            <p><strong>Freelancer:</strong> {{ data?.freelancer.email }}</p>
+            <p><strong>Proposal:</strong> {{ data?.proposal }}</p>
+            <p><strong>Amount:</strong> {{ data?.agreedAmount | currency }}</p>
+            <p><strong>Contract Type:</strong> {{ data?.budgetType }}</p>
+            <p><strong>Status:</strong> {{ data?.status }}</p>
+            <p><strong>Start Date:</strong> {{ data?.startDate }}</p>
+            <p><strong>Description:</strong> {{ data?.description }}</p>
+        </div>
+    </div>
+</div>

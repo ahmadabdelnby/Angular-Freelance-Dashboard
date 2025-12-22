@@ -1,0 +1,14 @@
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+}
+
+.modal-backdrop {
+  position: fixed; /* covers viewport */
+  inset: 0;        /* top/right/bottom/left = 0 */
+  background: rgba(0, 0, 0, 0.25); /* dim, not black */
+  z-index: 1050;
+}
+

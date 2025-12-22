@@ -1,0 +1,62 @@
+<!-- <div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">{{ selectedCollection ? (selectedCollection | titlecase) : '' }}</h2>
+    <button *ngIf="isCreatable" class="btn btn-secondary" (click)="openCreateModal()">
+      + Add {{ selectedCollection }}
+    </button>
+  </div>
+
+  <div class="cards-grid">
+    <ng-container *ngIf="documents && documents.length > 0">
+      <ng-container *ngFor="let doc of documents">
+        <ng-container *ngComponentOutlet="currentComponent; injector: createInjector(doc)">
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="isModalOpen && currentModalComponent">
+    <div (click)="closeModal()"></div>
+    <div>
+      <ng-container *ngComponentOutlet="currentModalComponent; injector: createModalInjector(currentModalData)">
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+ -->
+
+
+ <div class="container my-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>{{ selectedCollection | titlecase }}</h2>
+
+    <button
+      *ngIf="isCreatable"
+      class="btn btn-secondary"
+      (click)="openCreateModal()">
+      + Add {{ selectedCollection }}
+    </button>
+  </div>
+
+  <div class="cards-grid">
+    <ng-container *ngFor="let doc of documents; trackBy: trackById">
+
+      <ng-container
+        *ngComponentOutlet="currentComponent;
+                            injector: getCardInjector(doc._id)">
+      </ng-container>
+
+    </ng-container>
+  </div>
+
+  <!-- Modal -->
+  <ng-container *ngIf="isModalOpen && currentModalComponent">
+  <div class="modal-backdrop" (click)="closeModal()"></div>
+  <ng-container *ngComponentOutlet="currentModalComponent; injector: modalInjector">
+  </ng-container>
+</ng-container>
+
+
+</div>
+
