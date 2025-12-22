@@ -1,0 +1,17 @@
+<div class="modal-backdrop" (click)="onCancel()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="modal-header d-flex justify-content-between align-items-center">
+      <h5 class="modal-title mb-3 text-decoration-underline">Job Details</h5>
+      <!-- Close button -->
+      <button class="close-btn" (click)="onCancel()">×</button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <p><strong>Job ID:</strong> {{ data._id }}</p>
+      <p><strong>Job Title:</strong> {{ data.title }}</p>
+      <p><strong>Job Description:</strong> {{ data.description }}</p>
+    </div>
+  </div>
+</div>

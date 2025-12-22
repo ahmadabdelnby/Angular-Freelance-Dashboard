@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +19,11 @@ export class CollectionService {
   }
 
 
-  
+
   //get all docs in a specific collection
   getCollectionDocs(collectionName: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${collectionName}`);
   }
+  
+
 }

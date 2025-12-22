@@ -341,10 +341,24 @@
 
 <!-- <router-outlet /> -->
 
-<div class="d-flex vh-100">
-  <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
-  <!-- main -->
+<!-- <div class="d-flex vh-100">
+  <app-sidebar2></app-sidebar2>
   <app-main class="flex-grow-1 d-flex flex-column">
   </app-main>
+</div> -->
+
+<router-outlet *ngIf="!loginService.isLoggedIn()"></router-outlet>
+<div *ngIf="loginService.isLoggedIn()" class="d-flex vh-100">
+  <app-sidebar2></app-sidebar2>
+  <app-main class="flex-grow-1 d-flex flex-column"></app-main>
 </div>
+
+
+<!-- Dashboard layout -->
+<!-- <div *ngIf="loginService.isLoggedIn()" class="d-flex vh-100">
+  <app-sidebar2></app-sidebar2>
+  <app-main class="flex-grow-1 d-flex flex-column">
+    <router-outlet></router-outlet>
+  </app-main>
+</div>
+<router-outlet *ngIf="!loginService.isLoggedIn()"></router-outlet> -->

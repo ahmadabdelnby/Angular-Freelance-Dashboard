@@ -1,0 +1,92 @@
+<!-- <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Admin Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Username:</strong> {{ user?.username }}</p>
+        <p><strong>Email:</strong> {{ user?.email }}</p>
+        <p><strong>Role:</strong> {{ user?.role }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
+
+<!-- last working template -->
+ 
+<!-- <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Profile</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong>Username:</strong> {{ (loginService.user$ | async)?.username }}</p>
+        <p><strong>First Name:</strong> {{ (loginService.user$ | async)?.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ (loginService.user$ | async)?.last_name }}</p>
+        <p><strong>Country:</strong> {{ (loginService.user$ | async)?.country }}</p>
+        <p><strong>Email:</strong> {{ (loginService.user$ | async)?.email }}</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button class="btn btn-danger" (click)="logout()">
+          Logout
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body d-flex flex-wrap gap-2">
+        <div class="p-2 border rounded flex-grow-1">
+          <strong>Username</strong>
+          <div>{{ (loginService.user$ | async)?.username }}</div>
+        </div>
+        <div class="p-2 border rounded flex-grow-1">
+          <strong>First Name</strong>
+          <div>{{ (loginService.user$ | async)?.first_name }}</div>
+        </div>
+        <div class="p-2 border rounded flex-grow-1">
+          <strong>Last Name</strong>
+          <div>{{ (loginService.user$ | async)?.last_name }}</div>
+        </div>
+        <div class="p-2 border rounded flex-grow-1">
+          <strong>Country</strong>
+          <div>{{ (loginService.user$ | async)?.country }}</div>
+        </div>
+        <div class="p-2 border rounded flex-grow-1 w-100">
+          <strong>Email</strong>
+          <div>{{ (loginService.user$ | async)?.email }}</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+      </div>
+
+    </div>
+  </div>
+</div>

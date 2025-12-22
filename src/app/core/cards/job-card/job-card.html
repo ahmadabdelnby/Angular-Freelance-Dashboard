@@ -5,8 +5,8 @@
     <p class="card-subtitle mb-2 text-muted"><strong>Job Title:</strong> {{ job.title }}</p>
     <p class="card-subtitle mb-2 text-muted"><strong>Job Description: </strong>{{ job.description }}</p>
     <!-- <a href="#" class="btn btn-secondary btn-sm mt-auto">View Skill</a> -->
-    <button class="btn btn-secondary btn-sm" >Update</button>
-    <button class="btn btn-danger btn-sm">Delete</button>
+    <button class="btn btn-secondary btn-sm" (click)="onViewDetails()">View</button>
+    <button class="btn btn-danger btn-sm" (click)="onDeleteClick()">Delete</button>
 
   </div>
 </div>
