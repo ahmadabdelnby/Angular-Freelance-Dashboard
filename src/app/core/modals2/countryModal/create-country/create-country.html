@@ -1,34 +1,79 @@
-<div class="modal-container">
-    <h3>{{ mode === 'create' ? 'Add New' : 'Update' }}</h3>
+﻿<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h4 class="modal-title mb-0">
+        <i class="bi bi-flag-fill me-2"></i>
+        {{ mode === 'create' ? 'Create New Country' : 'Edit Country' }}
+      </h4>
+      <button class="btn-close" (click)="close()" aria-label="Close"></button>
+    </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="form-group">
-            <label>Name</label>
-            <input formControlName="name" class="form-control" />
+    <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body">
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          Country Information
+        </h5>
+        
+        <div class="mb-3">
+          <label for="name" class="form-label">
+            Country Name <span class="text-danger">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name" 
+            class="form-control"
+            placeholder="Enter country name"
+          />
         </div>
 
-        <div class="form-group">
-            <label>Code</label>
-            <textarea formControlName="code" class="form-control"></textarea>
+        <div class="mb-3">
+          <label for="code" class="form-label">Country Code</label>
+          <input 
+            type="text" 
+            id="code" 
+            formControlName="code" 
+            class="form-control" 
+            placeholder="Enter country code (e.g., US, EG)"
+          />
         </div>
 
-        <div class="form-group">
-            <label>Flag</label>
-            <textarea formControlName="flag" class="form-control"></textarea>
+        <div class="mb-3">
+          <label for="flag" class="form-label">Flag Emoji</label>
+          <input 
+            type="text" 
+            id="flag" 
+            formControlName="flag" 
+            class="form-control" 
+            placeholder="Enter flag emoji"
+          />
         </div>
 
-        <div class="form-group form-check">
-            <input type="checkbox" id="isActive" class="form-check-input" formControlName="isActive" />
-            <label for="isActive" class="form-check-label">
-                Active
-            </label>
+        <div class="form-check">
+          <input 
+            type="checkbox" 
+            id="isActive" 
+            formControlName="isActive" 
+            class="form-check-input"
+          />
+          <label for="isActive" class="form-check-label">
+            <i class="bi bi-check-circle me-1"></i>
+            Active Status
+          </label>
         </div>
+      </div>
 
-        <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
-            <button type="submit" class="btn btn-primary">
-                {{ mode === 'create' ? 'Add' : 'Update' }}
-            </button>
-        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">
+          <i class="bi bi-x-circle me-1"></i>
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-circle me-1"></i>
+          {{ mode === 'create' ? 'Create Country' : 'Update Country' }}
+        </button>
+      </div>
     </form>
+  </div>
 </div>

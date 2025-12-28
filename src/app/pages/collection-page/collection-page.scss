@@ -1,0 +1,100 @@
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Page Header */
+h2 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+/* Add Button */
+.btn-secondary {
+  background-color: var(--herfa-primary) !important;
+  border-color: var(--herfa-primary) !important;
+  color: white !important;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  
+  &:hover {
+    background-color: var(--herfa-primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(20, 168, 0, 0.2);
+  }
+}
+
+/* Search Bar */
+.input-group {
+  .input-group-text {
+    background-color: white;
+    border-right: none;
+    color: var(--herfa-gray);
+  }
+  
+  .form-control {
+    border-left: none;
+    border-radius: 0 8px 8px 0 !important;
+    
+    &:focus {
+      border-color: var(--herfa-primary);
+      box-shadow: none;
+      + .btn-outline-secondary {
+        border-color: var(--herfa-primary);
+      }
+    }
+  }
+  
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Pagination */
+.pagination {
+  .page-link {
+    color: var(--herfa-primary);
+    border-color: var(--herfa-border);
+    border-radius: 6px;
+    margin: 0 3px;
+    
+    &:hover {
+      background-color: var(--herfa-primary-light);
+      border-color: var(--herfa-primary);
+    }
+  }
+  
+  .page-item.active .page-link {
+    background-color: var(--herfa-primary);
+    border-color: var(--herfa-primary);
+  }
+  
+  .page-item.disabled .page-link {
+    color: var(--herfa-gray);
+  }
+}
+
+/* Alert Messages */
+.alert {
+  border-radius: 8px;
+  border: none;
+  
+  &.alert-info {
+    background-color: var(--herfa-primary-light);
+    color: var(--herfa-primary-hover);
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1050;
+  backdrop-filter: blur(2px);
+}

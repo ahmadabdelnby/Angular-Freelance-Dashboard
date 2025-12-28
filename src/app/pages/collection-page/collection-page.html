@@ -1,0 +1,115 @@
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>{{ collectionName | titlecase }}</h2>
+    
+    <button
+      *ngIf="isCreatable"
+      class="btn btn-secondary"
+      (click)="openCreateModal()">
+      + Add {{ collectionName }}
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="row mb-4" *ngIf="!isLoading">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search {{ collectionName }}..."
+          [value]="searchQuery"
+          (input)="onSearchChange($any($event.target).value)"
+        />
+        <button
+          *ngIf="searchQuery"
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="onSearchChange('')">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6 text-end">
+      <span class="text-muted">
+        Showing {{ filteredDocuments.length }} of {{ documents.length }} items
+      </span>
+    </div>
+  </div>
+  
+  <!-- Loader -->
+  <app-loader 
+    *ngIf="isLoading" 
+    [message]="'Loading ' + collectionName + '...'"
+    size="medium">
+  </app-loader>
+  
+  <!-- Cards Grid -->
+  <div class="cards-grid" *ngIf="!isLoading">
+    <ng-container *ngFor="let doc of filteredDocuments; trackBy: trackById">
+      <ng-container
+        *ngComponentOutlet="currentComponent;
+                            injector: getCardInjector(doc._id || doc.id)">
+      </ng-container>
+    </ng-container>
+  </div>
+  
+  <!-- No data message -->
+  <div *ngIf="!isLoading && documents.length === 0" class="alert alert-info">
+    No {{ collectionName }} found.
+  </div>
+
+  <!-- No results message -->
+  <div *ngIf="!isLoading && documents.length > 0 && filteredDocuments.length === 0" class="alert alert-warning">
+    No results found for "{{ searchQuery }}". Try a different search term.
+  </div>
+
+  <!-- Pagination -->
+  <nav *ngIf="!isLoading && totalPages > 1" aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <!-- Previous Button -->
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </li>
+
+      <!-- First Page -->
+      <li class="page-item" *ngIf="getPageNumbers()[0] > 1">
+        <button class="page-link" (click)="goToPage(1)">1</button>
+      </li>
+      <li class="page-item disabled" *ngIf="getPageNumbers()[0] > 2">
+        <span class="page-link">...</span>
+      </li>
+
+      <!-- Page Numbers -->
+      <li class="page-item" *ngFor="let page of getPageNumbers()" [class.active]="currentPage === page">
+        <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+      </li>
+
+      <!-- Last Page -->
+      <li class="page-item disabled" *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1">
+        <span class="page-link">...</span>
+      </li>
+      <li class="page-item" *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages">
+        <button class="page-link" (click)="goToPage(totalPages)">{{ totalPages }}</button>
+      </li>
+
+      <!-- Next Button -->
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button class="page-link" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+  
+  <!-- Modal -->
+  <ng-container *ngIf="isModalOpen && currentModalComponent">
+    <ng-container *ngComponentOutlet="currentModalComponent; injector: modalInjector">
+    </ng-container>
+  </ng-container>
+</div>

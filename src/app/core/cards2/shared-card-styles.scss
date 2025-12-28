@@ -1,0 +1,77 @@
+// Shared styles for all cards
+@mixin card-base {
+  border: 1px solid var(--herfa-border);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  background: white;
+  min-width: 280px;
+  max-width: 320px;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+    border-color: var(--herfa-primary);
+  }
+  
+  .card-body {
+    padding: 2rem 1.5rem;
+  }
+  
+  // Card Title (Main name)
+  .card-title {
+    font-size: 1.1rem;
+    color: #212529;
+    margin-bottom: 0.5rem;
+  }
+  
+  // Card Text (Secondary info)
+  .card-text {
+    font-size: 0.9rem;
+    word-break: break-word;
+    
+    i {
+      color: var(--herfa-primary);
+    }
+    
+    &.small {
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+  }
+  
+  // Action Buttons
+  button {
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    
+    &.btn-outline-primary {
+      &:hover {
+        background-color: var(--herfa-primary);
+        border-color: var(--herfa-primary);
+        color: white;
+      }
+    }
+    
+    &.btn-outline-danger {
+      &:hover {
+        background-color: var(--bs-danger);
+        border-color: var(--bs-danger);
+        color: white;
+      }
+    }
+    
+    i {
+      font-size: 0.875rem;
+    }
+  }
+  
+  // Badge styles
+  .badge {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    font-weight: 500;
+  }
+}

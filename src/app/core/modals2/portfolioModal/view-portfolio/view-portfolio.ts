@@ -1,10 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-view-portfolio',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, DatePipe],
   templateUrl: './view-portfolio.html',
   styleUrl: './view-portfolio.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewPortfolio {
     constructor(

@@ -1,0 +1,137 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">{{ mode === 'create' ? 'Create New Proposal' : 'Edit Proposal' }}</h2>
+      <button class="btn-close" (click)="close()" aria-label="Close">×</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body">
+      <!-- Job ID (Read-only for existing) -->
+      <div class="mb-3">
+        <label for="job_id" class="form-label">Job ID *</label>
+        <input 
+          type="text" 
+          id="job_id" 
+          formControlName="job_id" 
+          class="form-control"
+          [class.is-invalid]="form.get('job_id')?.invalid && form.get('job_id')?.touched"
+          [readonly]="mode === 'update'"
+          placeholder="Enter Job ID"
+        />
+        <div class="invalid-feedback" *ngIf="form.get('job_id')?.invalid && form.get('job_id')?.touched">
+          {{ getErrorMessage('job_id') }}
+        </div>
+      </div>
+
+      <!-- Freelancer ID (Read-only for existing) -->
+      <div class="mb-3">
+        <label for="freelancer_id" class="form-label">Freelancer ID *</label>
+        <input 
+          type="text" 
+          id="freelancer_id" 
+          formControlName="freelancer_id" 
+          class="form-control"
+          [class.is-invalid]="form.get('freelancer_id')?.invalid && form.get('freelancer_id')?.touched"
+          [readonly]="mode === 'update'"
+          placeholder="Enter Freelancer ID"
+        />
+        <div class="invalid-feedback" *ngIf="form.get('freelancer_id')?.invalid && form.get('freelancer_id')?.touched">
+          {{ getErrorMessage('freelancer_id') }}
+        </div>
+      </div>
+
+      <!-- Cover Letter -->
+      <div class="mb-3">
+        <label for="coverLetter" class="form-label">Cover Letter *</label>
+        <textarea 
+          id="coverLetter" 
+          formControlName="coverLetter" 
+          class="form-control" 
+          rows="6"
+          [class.is-invalid]="form.get('coverLetter')?.invalid && form.get('coverLetter')?.touched"
+          minlength="50"
+          maxlength="2000"
+          placeholder="Write your cover letter (50-2000 characters)"
+        ></textarea>
+        <small class="text-muted">{{ form.get('coverLetter')?.value?.length || 0 }}/2000 (min 50)</small>
+        <div class="invalid-feedback" *ngIf="form.get('coverLetter')?.invalid && form.get('coverLetter')?.touched">
+          {{ getErrorMessage('coverLetter') }}
+        </div>
+      </div>
+
+      <!-- Additional Message -->
+      <div class="mb-3">
+        <label for="message" class="form-label">Additional Message</label>
+        <textarea 
+          id="message" 
+          formControlName="message" 
+          class="form-control" 
+          rows="3"
+          [class.is-invalid]="form.get('message')?.invalid && form.get('message')?.touched"
+          maxlength="1000"
+          placeholder="Any additional information (optional, max 1000 characters)"
+        ></textarea>
+        <small class="text-muted">{{ form.get('message')?.value?.length || 0 }}/1000</small>
+      </div>
+
+      <!-- Bid Amount & Delivery Time -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="bidAmount" class="form-label">Bid Amount ($) *</label>
+          <input 
+            type="number" 
+            id="bidAmount" 
+            formControlName="bidAmount" 
+            class="form-control"
+            [class.is-invalid]="form.get('bidAmount')?.invalid && form.get('bidAmount')?.touched"
+            min="0"
+            step="0.01"
+            placeholder="Enter your bid"
+          />
+          <div class="invalid-feedback" *ngIf="form.get('bidAmount')?.invalid && form.get('bidAmount')?.touched">
+            {{ getErrorMessage('bidAmount') }}
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="deliveryTime" class="form-label">Delivery Time (days) *</label>
+          <input 
+            type="number" 
+            id="deliveryTime" 
+            formControlName="deliveryTime" 
+            class="form-control"
+            [class.is-invalid]="form.get('deliveryTime')?.invalid && form.get('deliveryTime')?.touched"
+            min="1"
+            placeholder="Days to complete"
+          />
+          <div class="invalid-feedback" *ngIf="form.get('deliveryTime')?.invalid && form.get('deliveryTime')?.touched">
+            {{ getErrorMessage('deliveryTime') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select 
+          id="status" 
+          formControlName="status" 
+          class="form-select"
+        >
+          <option value="submitted">Submitted</option>
+          <option value="viewed">Viewed</option>
+          <option value="accepted">Accepted</option>
+          <option value="rejected">Rejected</option>
+          <option value="withdrawn">Withdrawn</option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ mode === 'create' ? 'Submit Proposal' : 'Update Proposal' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

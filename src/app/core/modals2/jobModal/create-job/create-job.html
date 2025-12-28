@@ -1,0 +1,245 @@
+﻿<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h4 class="modal-title mb-0">
+        <i class="bi bi-briefcase-fill me-2"></i>
+        {{ mode === 'create' ? 'Create New Job' : 'Edit Job' }}
+      </h4>
+      <button class="btn-close" (click)="close()" aria-label="Close"></button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body">
+      <!-- Basic Information Section -->
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          Basic Information
+        </h5>
+        
+        <div class="mb-3">
+          <label for="title" class="form-label">
+            Job Title <span class="text-danger">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="title" 
+            formControlName="title" 
+            class="form-control"
+            [class.is-invalid]="form.get('title')?.invalid && form.get('title')?.touched"
+            maxlength="200"
+            placeholder="Enter job title"
+          />
+          <small class="text-muted">{{ form.get('title')?.value?.length || 0 }}/200 characters</small>
+          <div class="invalid-feedback" *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+            {{ getErrorMessage('title') }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">
+            Description <span class="text-danger">*</span>
+          </label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            class="form-control" 
+            rows="5"
+            [class.is-invalid]="form.get('description')?.invalid && form.get('description')?.touched"
+            minlength="50"
+            maxlength="5000"
+            placeholder="Enter detailed job description (minimum 50 characters)"
+          ></textarea>
+          <small class="text-muted">{{ form.get('description')?.value?.length || 0 }}/5000 characters (minimum 50)</small>
+          <div class="invalid-feedback" *ngIf="form.get('description')?.invalid && form.get('description')?.touched">
+            {{ getErrorMessage('description') }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="specialty" class="form-label">
+              Specialty <span class="text-danger">*</span>
+            </label>
+            <select 
+              id="specialty" 
+              formControlName="specialty" 
+              class="form-select"
+              [class.is-invalid]="form.get('specialty')?.invalid && form.get('specialty')?.touched"
+            >
+              <option value="">Select a specialty</option>
+              <option *ngFor="let specialty of specialties" [value]="specialty._id">
+                {{ specialty.name }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="form.get('specialty')?.invalid && form.get('specialty')?.touched">
+              {{ getErrorMessage('specialty') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-star-fill me-2"></i>
+          Required Skills
+        </h5>
+        
+        <div class="mb-3">
+          <label for="skills" class="form-label">Skills</label>
+          <select 
+            id="skills" 
+            formControlName="skills" 
+            class="form-select" 
+            multiple 
+            size="5"
+          >
+            <option *ngFor="let skill of skills" [value]="skill._id">
+              {{ skill.name }}
+            </option>
+          </select>
+          <small class="text-muted">Hold Ctrl (Windows) or Cmd (Mac) to select multiple skills</small>
+        </div>
+      </div>
+
+      <!-- Budget Information Section -->
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-cash-coin me-2"></i>
+          Budget Information
+        </h5>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="budgetType" class="form-label">
+              Budget Type <span class="text-danger">*</span>
+            </label>
+            <select 
+              id="budgetType" 
+              formControlName="budgetType" 
+              class="form-select"
+              [class.is-invalid]="form.get('budgetType')?.invalid && form.get('budgetType')?.touched"
+            >
+              <option value="fixed">Fixed Price</option>
+              <option value="hourly">Hourly Rate</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="budgetAmount" class="form-label">
+              Budget Amount ($) <span class="text-danger">*</span>
+            </label>
+            <input 
+              type="number" 
+              id="budgetAmount" 
+              formControlName="budgetAmount" 
+              class="form-control"
+              [class.is-invalid]="form.get('budgetAmount')?.invalid && form.get('budgetAmount')?.touched"
+              min="1"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+            <div class="invalid-feedback" *ngIf="form.get('budgetAmount')?.invalid && form.get('budgetAmount')?.touched">
+              {{ getErrorMessage('budgetAmount') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Timeline Section -->
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-clock-fill me-2"></i>
+          Project Timeline
+        </h5>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="durationValue" class="form-label">Duration</label>
+            <input 
+              type="number" 
+              id="durationValue" 
+              formControlName="durationValue" 
+              class="form-control"
+              min="1"
+              placeholder="Enter duration"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="durationUnit" class="form-label">Unit</label>
+            <select 
+              id="durationUnit" 
+              formControlName="durationUnit" 
+              class="form-select"
+            >
+              <option value="days">Days</option>
+              <option value="weeks">Weeks</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Settings Section -->
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-gear-fill me-2"></i>
+          Job Settings
+        </h5>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select 
+              id="status" 
+              formControlName="status" 
+              class="form-select"
+            >
+              <option value="open">Open</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="visibility" class="form-label">Visibility</label>
+            <select 
+              id="visibility" 
+              formControlName="visibility" 
+              class="form-select"
+            >
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input 
+            type="checkbox" 
+            id="featured" 
+            formControlName="featured" 
+            class="form-check-input"
+          />
+          <label for="featured" class="form-check-label">
+            <i class="bi bi-star-fill me-1"></i>
+            Mark as Featured Job
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">
+          <i class="bi bi-x-circle me-1"></i>
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="bi bi-check-circle me-1"></i>
+          {{ mode === 'create' ? 'Create Job' : 'Update Job' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

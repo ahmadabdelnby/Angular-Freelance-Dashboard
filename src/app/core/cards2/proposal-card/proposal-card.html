@@ -1,11 +1,37 @@
-<div class="card h-100" style="min-width: 350px; max-width: 400px;">
-  <div class="card-body d-flex flex-column">
-    <p class="card-title text-muted"><strong>Proposal ID:</strong> {{ data?._id }}</p>
-    <p class="card-subtitle mb-2 text-muted"><strong>Freelancer Email:</strong> {{ data?.freelancer_id?.email }}</p>
-    <p class="card-subtitle mb-2 text-muted"><strong>Job Title:</strong> {{ data?.status }}</p>
-    <!--<p class="card-subtitle mb-2 text-muted"><strong>Job Description: </strong>{{ data?.description }}</p> -->
-    <!-- <a href="#" class="btn btn-secondary btn-sm mt-auto">View Skill</a> -->
-    <button class="btn btn-secondary btn-sm" (click)="view()">View</button>
-    <button class="btn btn-danger btn-sm" (click)="delete()">Delete</button>
+<div class="card proposal-card h-100 shadow-sm">
+  <div class="card-body text-center">
+    <!-- Status Badge -->
+    <div class="mb-3">
+      <span class="badge" [ngClass]="{
+        'bg-success': data?.status === 'accepted',
+        'bg-warning': data?.status === 'pending',
+        'bg-danger': data?.status === 'rejected',
+        'bg-secondary': !data?.status
+      }">
+        {{ data?.status || 'Unknown' }}
+      </span>
+    </div>
+    
+    <!-- Freelancer Email -->
+    <p class="card-text text-muted mb-2">
+      <i class="bi bi-person-fill me-1"></i>
+      {{ data?.freelancer_id?.email || 'No freelancer' }}
+    </p>
+    
+    <!-- Job Reference -->
+    <p class="card-text text-secondary small mb-3">
+      <i class="bi bi-briefcase me-1"></i>
+      {{ data?.job_id?.title || 'No job reference' }}
+    </p>
+    
+    <!-- Action Buttons -->
+    <div class="d-flex gap-2 justify-content-center">
+      <button class="btn btn-sm btn-outline-primary flex-fill" (click)="view()">
+        <i class="bi bi-eye me-1"></i> View
+      </button>
+      <button class="btn btn-sm btn-outline-danger flex-fill" (click)="delete()">
+        <i class="bi bi-trash me-1"></i> Delete
+      </button>
+    </div>
   </div>
 </div>

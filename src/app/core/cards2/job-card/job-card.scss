@@ -1,0 +1,9 @@
+@import '../shared-card-styles.scss';
+
+.job-card {
+  @include card-base;
+  
+  .card-title {
+    color: var(--herfa-primary);
+  }
+}

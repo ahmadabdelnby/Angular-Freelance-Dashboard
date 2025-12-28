@@ -1,11 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-view-job',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, CurrencyPipe, DatePipe],
   templateUrl: './view-job.html',
   styleUrls: ['./view-job.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewJob {
   constructor(

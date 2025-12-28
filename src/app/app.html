@@ -339,26 +339,22 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 
-<!-- <router-outlet /> -->
-
-<!-- <div class="d-flex vh-100">
-  <app-sidebar2></app-sidebar2>
-  <app-main class="flex-grow-1 d-flex flex-column">
-  </app-main>
-</div> -->
-
+<!-- Login page (no sidebar/navbar) -->
 <router-outlet *ngIf="!loginService.isLoggedIn()"></router-outlet>
-<div *ngIf="loginService.isLoggedIn()" class="d-flex vh-100">
+
+<!-- Dashboard layout (with sidebar and navbar) -->
+<div *ngIf="loginService.isLoggedIn()" class="d-flex" style="height: 100vh; overflow: hidden;">
   <app-sidebar2></app-sidebar2>
-  <app-main class="flex-grow-1 d-flex flex-column"></app-main>
+  <div class="flex-grow-1 d-flex flex-column" style="overflow: hidden;">
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
+    <!-- Content area -->
+    <app-main class="flex-grow-1" style="overflow-y: auto; overflow-x: hidden;"></app-main>
+  </div>
 </div>
 
+<!-- Admin Profile Modal (global) -->
+<app-admin-profile *ngIf="loginService.isLoggedIn()"></app-admin-profile>
 
-<!-- Dashboard layout -->
-<!-- <div *ngIf="loginService.isLoggedIn()" class="d-flex vh-100">
-  <app-sidebar2></app-sidebar2>
-  <app-main class="flex-grow-1 d-flex flex-column">
-    <router-outlet></router-outlet>
-  </app-main>
-</div>
-<router-outlet *ngIf="!loginService.isLoggedIn()"></router-outlet> -->
+<!-- Toast Notifications (global) -->
+<app-toast-container></app-toast-container>

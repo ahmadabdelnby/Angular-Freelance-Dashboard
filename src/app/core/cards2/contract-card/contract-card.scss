@@ -1,0 +1,15 @@
+@import '../shared-card-styles.scss';
+
+.contract-card {
+  @include card-base;
+  
+  .card-title {
+    color: var(--herfa-primary);
+    font-size: 1.125rem;
+  }
+  
+  .badge {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+}

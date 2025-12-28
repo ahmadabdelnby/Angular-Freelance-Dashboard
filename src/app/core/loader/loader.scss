@@ -1,0 +1,154 @@
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  width: 100%;
+  padding: 2rem 1rem;
+  
+  &.loader-small {
+    min-height: 200px;
+    
+    .hexagon {
+      font-size: 2rem;
+    }
+    
+    .brand-name {
+      font-size: 1rem;
+    }
+    
+    .loader-message {
+      font-size: 0.875rem;
+    }
+  }
+  
+  &.loader-medium {
+    min-height: 300px;
+    
+    .hexagon {
+      font-size: 3rem;
+    }
+    
+    .brand-name {
+      font-size: 1.25rem;
+    }
+    
+    .loader-message {
+      font-size: 1rem;
+    }
+  }
+  
+  &.loader-large {
+    min-height: 400px;
+    
+    .hexagon {
+      font-size: 4rem;
+    }
+    
+    .brand-name {
+      font-size: 1.5rem;
+    }
+    
+    .loader-message {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+/* Herfa Brand Loader */
+.herfa-loader {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Hexagon Spinner Container */
+.hexagon-spinner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+}
+
+/* Individual Hexagon Styling */
+.hexagon {
+  position: absolute;
+  color: var(--herfa-primary, var(--bs-success));
+  animation: hexagonRotate 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(25, 135, 84, 0.3));
+}
+
+/* Staggered Animation for Each Hexagon */
+.hex-1 {
+  animation-delay: 0s;
+  opacity: 1;
+}
+
+.hex-2 {
+  animation-delay: 0.66s;
+  opacity: 0.7;
+}
+
+.hex-3 {
+  animation-delay: 1.33s;
+  opacity: 0.4;
+}
+
+/* Brand Text */
+.brand-text {
+  margin-top: 0.5rem;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--herfa-primary, var(--bs-success));
+  letter-spacing: 0.5px;
+  animation: brandPulse 2s ease-in-out infinite;
+}
+
+/* Loader Message */
+.loader-message {
+  margin: 0;
+  font-weight: 500;
+  animation: messageFade 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes hexagonRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: inherit;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: inherit;
+  }
+}
+
+@keyframes brandPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes messageFade {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}

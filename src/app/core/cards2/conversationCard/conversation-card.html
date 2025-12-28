@@ -1,0 +1,49 @@
+<div class="card conversation-card">
+  <div class="card-header">
+    <div class="conversation-info">
+      <i class="bi bi-chat-dots-fill text-success me-2"></i>
+      <span class="conversation-id">{{ document?._id }}</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="participants-section mb-3">
+      <h6 class="section-label">
+        <i class="bi bi-people-fill me-2"></i>
+        Participants
+      </h6>
+      <p class="participants-names">{{ getParticipantsNames() }}</p>
+    </div>
+
+    <div class="message-preview mb-3" *ngIf="document?.lastMessage">
+      <h6 class="section-label">
+        <i class="bi bi-chat-left-text me-2"></i>
+        Last Message
+      </h6>
+      <p class="message-text">{{ getLastMessagePreview() }}</p>
+      <small class="text-muted">{{ formatDate(document?.lastMessageAt) }}</small>
+    </div>
+
+    <div class="conversation-stats">
+      <div class="stat-item">
+        <i class="bi bi-envelope-fill me-1"></i>
+        <span>Messages: {{ getMessageCount() }}</span>
+      </div>
+      <div class="stat-item" *ngIf="document?.job">
+        <i class="bi bi-briefcase me-1"></i>
+        <span>{{ document?.job?.title }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn btn-sm btn-primary" (click)="onView()">
+      <i class="bi bi-eye me-1"></i>
+      View Messages
+    </button>
+    <button class="btn btn-sm btn-danger" (click)="onDelete()">
+      <i class="bi bi-trash me-1"></i>
+      Delete
+    </button>
+  </div>
+</div>

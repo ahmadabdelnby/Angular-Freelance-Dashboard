@@ -1,0 +1,10 @@
+@import '../shared-card-styles.scss';
+
+.proposal-card {
+  @include card-base;
+  
+  .badge {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+}

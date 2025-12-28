@@ -35,12 +35,20 @@ export const componentRegistry: {
     .then(m => m.UserCard),
   proposals: () => import('../core/cards2/proposal-card/proposal-card')
     .then(m => m.ProposalCard),
+  portfolio: () => import('../core/cards2/portfolio-card/portfolio-card')
+    .then(m => m.PortfolioCard),
   portfolioitems: () => import('../core/cards2/portfolio-card/portfolio-card')
     .then(m => m.PortfolioCard),
   contracts: () => import('../core/cards2/contract-card/contract-card')
     .then(m => m.ContractCard),
+  contract: () => import('../core/cards2/contract-card/contract-card')
+    .then(m => m.ContractCard),
   skills: () => import('../core/cards2/skill-card/skill-card')
     .then(m => m.SkillCard),
   countries: () => import('../core/cards2/country-card/country-card')
-    .then(m => m.CountryCard)
+    .then(m => m.CountryCard),
+  conversations: () => import('../core/cards2/conversationCard/conversation-card')
+    .then(m => m.ConversationCard),
+  payment: () => import('../core/cards2/payment-card/payment-card')
+    .then(m => m.PaymentCard)
 };

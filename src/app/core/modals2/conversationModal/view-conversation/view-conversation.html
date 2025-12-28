@@ -1,0 +1,107 @@
+<div class="modal-backdrop" (click)="close()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h4 class="modal-title mb-0">
+                <i class="bi bi-chat-dots-fill me-2"></i>
+                Conversation Messages
+            </h4>
+            <button class="btn-close" (click)="close()" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+            <!-- Conversation Info -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Conversation Details
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Conversation ID:</label>
+                            <span class="text-muted small">{{ data?._id || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Participants:</label>
+                            <span class="fw-bold">{{ getParticipantsNames() }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="data?.job">
+                        <div class="info-item">
+                            <label>Related Job:</label>
+                            <span class="badge bg-primary">{{ data?.job?.title || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Last Message:</label>
+                            <span>{{ data?.lastMessageAt ? (data?.lastMessageAt | date:'medium') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Section -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-chat-left-text-fill me-2"></i>
+                    Messages ({{ messages.length }})
+                </h5>
+
+                <div *ngIf="isLoading" class="text-center py-4">
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading messages...</span>
+                    </div>
+                </div>
+
+                <div *ngIf="!isLoading && messages.length === 0" class="text-center py-4">
+                    <i class="bi bi-chat-quote text-muted" style="font-size: 3rem;"></i>
+                    <p class="text-muted mt-3">No messages in this conversation</p>
+                </div>
+
+                <div class="messages-list" *ngIf="!isLoading && messages.length > 0">
+                    <div class="message-item" *ngFor="let message of messages">
+                        <div class="message-header">
+                            <div class="sender-info">
+                                <img 
+                                    [src]="message.sender?.profile_picture_url || 'assets/default-avatar.png'" 
+                                    [alt]="getSenderName(message.sender)"
+                                    class="sender-avatar"
+                                />
+                                <div>
+                                    <strong>{{ getSenderName(message.sender) }}</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        {{ message.createdAt | date:'medium' }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="message-status">
+                                <span class="badge" [class.bg-success]="message.isRead" [class.bg-secondary]="!message.isRead">
+                                    <i class="bi" [class.bi-check-all]="message.isRead" [class.bi-check]="!message.isRead"></i>
+                                    {{ message.isRead ? 'Read' : 'Unread' }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            <p>{{ message.content }}</p>
+                        </div>
+                        <div class="message-meta" *ngIf="message.attachments && message.attachments.length > 0">
+                            <i class="bi bi-paperclip me-1"></i>
+                            <small>{{ message.attachments.length }} attachment(s)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="close()">
+                <i class="bi bi-x-circle me-1"></i>
+                Close
+            </button>
+        </div>
+    </div>
+</div>

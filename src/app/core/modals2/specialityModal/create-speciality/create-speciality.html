@@ -1,122 +1,82 @@
-<!-- <div class="modal-container">
-  <h3>{{ mode === 'create' ? 'Add New' : 'Update' }}</h3>
-
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="form-group">
-      <label>Name</label>
-      <input formControlName="name" class="form-control" />
+﻿<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h4 class="modal-title mb-0">
+        <i class="bi bi-diagram-3-fill me-2"></i>
+        {{ mode === 'create' ? 'Create New Specialty' : 'Edit Specialty' }}
+      </h4>
+      <button class="btn-close" (click)="close()" aria-label="Close"></button>
     </div>
 
-    <div class="form-group">
-      <label>Description</label>
-      <textarea formControlName="description" class="form-control"></textarea>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body">
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          Specialty Information
+        </h5>
+        
+        <div class="mb-3">
+          <label for="name" class="form-label">
+            Specialty Name <span class="text-danger">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name" 
+            class="form-control"
+            placeholder="Enter specialty name"
+          />
+        </div>
 
-    <div class="form-group" *ngIf="categories.length">
-      <label>Category</label>
-      <select formControlName="category" class="form-control">
-        <option value="">
-          {{ categories.length ? 'Select specialty' : 'Loading...' }}
-        </option>
-        <option *ngFor="let s of categories" [value]="s._id.toString()">
-          {{ s.name }}
-        </option>
-      </select>
-    </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            class="form-control" 
+            rows="4"
+            placeholder="Enter specialty description"
+          ></textarea>
+        </div>
 
-    <div class="form-group form-check">
-      <input type="checkbox" id="isActive" class="form-check-input" formControlName="isActive" />
-      <label for="isActive" class="form-check-label">
-        Active
-      </label>
-    </div>
+        <div class="mb-3" *ngIf="categories.length">
+          <label for="category" class="form-label">Category</label>
+          <select 
+            id="category" 
+            formControlName="category" 
+            class="form-select"
+          >
+            <option value="">{{ categories.length ? 'Select category' : 'Loading...' }}</option>
+            <option *ngFor="let s of categories" [value]="s._id.toString()">
+              {{ s.name }}
+            </option>
+          </select>
+        </div>
 
-    <div class="modal-actions">
-      <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
-      <button type="submit" class="btn btn-primary">
-        {{ mode === 'create' ? 'Add' : 'Update' }}
-      </button>
-    </div>
-  </form>
-</div> -->
+        <div class="form-check">
+          <input 
+            type="checkbox" 
+            id="isActive" 
+            formControlName="isActive" 
+            class="form-check-input"
+          />
+          <label for="isActive" class="form-check-label">
+            <i class="bi bi-check-circle me-1"></i>
+            Active Status
+          </label>
+        </div>
+      </div>
 
-
-
-<div class="modal-container">
-  <h3>{{ mode === 'create' ? 'Add New' : 'Update' }}</h3>
-
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="form-group">
-      <label>Name</label>
-      <input formControlName="name" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label>Description</label>
-      <textarea formControlName="description" class="form-control"></textarea>
-    </div>
-
-    <div class="form-group" *ngIf="categories.length">
-      <label>Category</label>
-      <select formControlName="Category" class="form-control">
-
-        <option value="">
-          {{ categories.length ? 'Select Category' : 'Loading...' }}
-        </option>
-        <option *ngFor="let s of categories" [value]="s._id.toString()">
-          {{ s.name }}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group form-check">
-      <input type="checkbox" id="isActive" class="form-check-input" formControlName="isActive" />
-      <label for="isActive" class="form-check-label">
-        Active
-      </label>
-    </div>
-
-    <div class="modal-actions">
-      <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
-      <button type="submit" class="btn btn-primary">
-        {{ mode === 'create' ? 'Add' : 'Update' }}
-      </button>
-    </div>
-  </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">
+          <i class="bi bi-x-circle me-1"></i>
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-circle me-1"></i>
+          {{ mode === 'create' ? 'Create Specialty' : 'Update Specialty' }}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

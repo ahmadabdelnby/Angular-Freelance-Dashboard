@@ -1,10 +1,12 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-view-user',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './view-user.html',
   styleUrl: './view-user.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewUser {
   constructor(

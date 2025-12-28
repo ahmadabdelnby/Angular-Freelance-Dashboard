@@ -1,10 +1,23 @@
-.flag {
-  font-size: 2rem; /* bigger */
-  font-weight: bold;
-  line-height: 1;
-  font-family: 
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Noto Color Emoji",
-    sans-serif;
+@import '../shared-card-styles.scss';
+
+.country-card {
+  @include card-base;
+  
+  // Flag Styling
+  .flag-wrapper {
+    position: relative;
+    width: 80px;
+    height: 60px;
+    margin: 0 auto;
+  }
+  
+  .country-flag {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid var(--herfa-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 }
+

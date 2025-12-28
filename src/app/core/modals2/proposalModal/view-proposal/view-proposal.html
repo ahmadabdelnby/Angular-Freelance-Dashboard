@@ -1,24 +1,132 @@
 <div class="modal-backdrop" (click)="close()">
     <div class="modal-container" (click)="$event.stopPropagation()">
-        <!-- Header -->
-        <div class="modal-header d-flex justify-content-between align-items-center">
-            <h5 class="modal-title mb-3 text-decoration-underline">Proposal Details</h5>
-            <!-- Close button -->
-            <button class="close-btn" (click)="close()">x</button>
+        <div class="modal-header">
+            <h4 class="modal-title mb-0">
+                <i class="bi bi-file-earmark-check me-2"></i>
+                Proposal Details
+            </h4>
+            <button class="btn-close" (click)="close()" aria-label="Close"></button>
         </div>
-        <!-- Body -->
+        
         <div class="modal-body">
-            <p><strong>Proposal ID:</strong> {{ data._id }}</p>
-            <p><strong>Freelancer Email:</strong> {{ data.freelancer_id?.email }}</p>
-            <!-- <p><strong>Client:</strong> {{ data.client.email }}</p>
-            <p><strong>Job Description:</strong> {{ data.description }}</p>
-            <p><strong>Speciality:</strong> {{ data.specialty.name }}</p>
-            <p><strong>Type:</strong> {{ data.budget.type }}</p>
-            <p><strong>Budget:</strong> {{ data.budget.amount | currency }}</p>
-            <p><strong>Status:</strong> {{ data.status }}</p>
-            <p><strong>Experience Level:</strong> {{ data.experienceLevel }}</p>
+            <div class="text-center mb-4">
+                <span class="status-badge" [ngClass]="{
+                    'status-active': data?.status === 'accepted',
+                    'status-completed': data?.status === 'submitted',
+                    'status-cancelled': data?.status === 'rejected',
+                    'status-pending': data?.status === 'pending'
+                }">
+                    <i class="bi" [ngClass]="{
+                        'bi-check-circle-fill': data?.status === 'accepted',
+                        'bi-clock-fill': data?.status === 'pending' || data?.status === 'submitted',
+                        'bi-x-circle-fill': data?.status === 'rejected'
+                    }"></i>
+                    {{ data?.status || 'N/A' }}
+                </span>
+            </div>
 
-            <p><strong>Job Description:</strong> {{ data.description }}</p> -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Basic Information
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Proposal ID:</label>
+                            <span class="text-muted small">{{ data?._id || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Freelancer:</label>
+                            <span>
+                                <i class="bi bi-person-fill me-1"></i>
+                                {{ data?.freelancer_id?.email || 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Job ID:</label>
+                            <span class="text-muted small">{{ data?.job_id?._id || data?.job_id || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Job Title:</label>
+                            <span>{{ data?.job_id?.title || 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-cash-stack me-2"></i>
+                    Pricing
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Proposed Amount:</label>
+                            <span class="fw-bold text-success">
+                                {{ (data?.proposedAmount || 0) | currency:'USD':'symbol':'1.2-2' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Duration:</label>
+                            <span>{{ data?.proposedDuration || 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section" *ngIf="data?.coverLetter">
+                <h5 class="section-title">
+                    <i class="bi bi-envelope-paper me-2"></i>
+                    Cover Letter
+                </h5>
+                <p class="description-text">{{ data?.coverLetter }}</p>
+            </div>
+
+            <div class="info-section" *ngIf="data?.attachments?.length > 0">
+                <h5 class="section-title">
+                    <i class="bi bi-paperclip me-2"></i>
+                    Attachments
+                </h5>
+                <div class="d-flex flex-column gap-2">
+                    <a *ngFor="let attachment of data?.attachments" 
+                       [href]="attachment" 
+                       target="_blank"
+                       class="text-decoration-none">
+                        <i class="bi bi-file-earmark me-2"></i>{{ attachment }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-calendar-event me-2"></i>
+                    Timeline
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Submitted At:</label>
+                            <span>{{ data?.createdAt ? (data?.createdAt | date:'medium') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Last Updated:</label>
+                            <span>{{ data?.updatedAt ? (data?.updatedAt | date:'medium') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

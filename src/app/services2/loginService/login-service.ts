@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap, EMPTY } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:3000/Freelancing/api/v1'; // adjust
+  private apiUrl = environment.apiUrl;
   private tokenKey = 'auth_token';
 
   private userSubject = new BehaviorSubject<any>(null);
@@ -19,11 +20,15 @@ export class LoginService {
 
 
   login(email: string, password: string) {
+    console.log('🔹 Login Request Data:', { email, password });
+    console.log('🔹 API URL:', `${this.apiUrl}/auth/login`);
+    
     return this.http.post<any>(`${this.apiUrl}/auth/login`, {
       email,
       password
     }).pipe(
       tap(response => {
+        console.log('✅ Login Response:', response);
         localStorage.setItem(this.tokenKey, response.token);
         this.userSubject.next(response.user);
       })

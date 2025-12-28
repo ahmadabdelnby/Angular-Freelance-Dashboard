@@ -1,11 +1,13 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-view-contract',
-  imports: [CurrencyPipe],
+  standalone: true,
+  imports: [CommonModule, DatePipe],
   templateUrl: './view-contract.html',
   styleUrl: './view-contract.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewContract {
   constructor(

@@ -1,23 +1,218 @@
-<div class="modal-backdrop" (click)="close()">
+﻿<div class="modal-backdrop" (click)="close()">
     <div class="modal-container" (click)="$event.stopPropagation()">
         <!-- Header -->
-        <div class="modal-header d-flex justify-content-between align-items-center">
-            <h5 class="modal-title mb-3 text-decoration-underline">Contract Details</h5>
-            <!-- Close button -->
-            <button class="close-btn" (click)="close()">x</button>
+        <div class="modal-header">
+            <h4 class="modal-title mb-0">
+                <i class="bi bi-file-earmark-text me-2"></i>
+                Contract Details
+            </h4>
+            <button class="btn-close" (click)="close()" aria-label="Close"></button>
         </div>
+        
         <!-- Body -->
         <div class="modal-body">
-            <p><strong>User ID:</strong> {{ data?._id }}</p>
-            <p><strong>Job:</strong> {{ data?.job }}</p>
-            <p><strong>Client:</strong> {{ data?.client.email }}</p>
-            <p><strong>Freelancer:</strong> {{ data?.freelancer.email }}</p>
-            <p><strong>Proposal:</strong> {{ data?.proposal }}</p>
-            <p><strong>Amount:</strong> {{ data?.agreedAmount | currency }}</p>
-            <p><strong>Contract Type:</strong> {{ data?.budgetType }}</p>
-            <p><strong>Status:</strong> {{ data?.status }}</p>
-            <p><strong>Start Date:</strong> {{ data?.startDate }}</p>
-            <p><strong>Description:</strong> {{ data?.description }}</p>
+            <!-- Contract Status Badge -->
+            <div class="text-center mb-4">
+                <span class="status-badge" [ngClass]="{
+                    'status-active': data?.status === 'active',
+                    'status-completed': data?.status === 'completed',
+                    'status-cancelled': data?.status === 'cancelled',
+                    'status-pending': data?.status === 'pending'
+                }">
+                    <i class="bi" [ngClass]="{
+                        'bi-check-circle-fill': data?.status === 'active',
+                        'bi-check2-all': data?.status === 'completed',
+                        'bi-x-circle-fill': data?.status === 'cancelled',
+                        'bi-clock-fill': data?.status === 'pending'
+                    }"></i>
+                    {{ data?.status || 'N/A' }}
+                </span>
+            </div>
+
+            <!-- Basic Information -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Basic Information
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Contract ID:</label>
+                            <span class="text-muted small">{{ data?._id || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Job ID:</label>
+                            <span class="text-muted small">{{ data?.job || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Proposal ID:</label>
+                            <span class="text-muted small">{{ data?.proposal || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Budget Type:</label>
+                            <span class="badge" [ngClass]="data?.budgetType === 'fixed' ? 'bg-info' : 'bg-warning'">
+                                {{ data?.budgetType || 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parties Information -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-people-fill me-2"></i>
+                    Contract Parties
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Client:</label>
+                            <span>
+                                <i class="bi bi-person-badge me-1"></i>
+                                {{ data?.client?.email || data?.client || 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Freelancer:</label>
+                            <span>
+                                <i class="bi bi-person-fill me-1"></i>
+                                {{ data?.freelancer?.email || data?.freelancer || 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Information -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-cash-stack me-2"></i>
+                    Financial Details
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Agreed Amount:</label>
+                            <span class="fw-bold text-success">
+                                {{ (data?.agreedAmount || 0) | currency:'USD':'symbol':'1.2-2' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Amount Paid:</label>
+                            <span class="fw-bold">
+                                {{ (data?.amountPaid || 0) | currency:'USD':'symbol':'1.2-2' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="data?.budgetType === 'hourly'">
+                        <div class="info-item">
+                            <label>Hours Worked:</label>
+                            <span>{{ data?.hoursWorked || 0 }} hrs</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="data?.budgetType === 'hourly'">
+                        <div class="info-item">
+                            <label>Hourly Rate:</label>
+                            <span>{{ (data?.hourlyRate || 0) | currency:'USD':'symbol':'1.2-2' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-calendar-event me-2"></i>
+                    Timeline
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Start Date:</label>
+                            <span>
+                                <i class="bi bi-calendar-check me-1"></i>
+                                {{ data?.startDate ? (data?.startDate | date:'medium') : 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>End Date:</label>
+                            <span>
+                                <i class="bi bi-calendar-x me-1"></i>
+                                {{ data?.endDate ? (data?.endDate | date:'medium') : 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Created At:</label>
+                            <span class="text-muted small">{{ data?.createdAt ? (data?.createdAt | date:'short') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Last Updated:</label>
+                            <span class="text-muted small">{{ data?.updatedAt ? (data?.updatedAt | date:'short') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Description -->
+            <div class="info-section" *ngIf="data?.description">
+                <h5 class="section-title">
+                    <i class="bi bi-file-text me-2"></i>
+                    Description
+                </h5>
+                <p class="description-text">{{ data?.description }}</p>
+            </div>
+
+            <!-- Additional Status -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-toggles me-2"></i>
+                    Status Flags
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="info-item">
+                            <label>Active:</label>
+                            <span class="badge" [ngClass]="data?.isActive ? 'bg-success' : 'bg-secondary'">
+                                {{ data?.isActive ? 'Yes' : 'No' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-item">
+                            <label>Completed:</label>
+                            <span class="badge" [ngClass]="data?.isCompleted ? 'bg-success' : 'bg-secondary'">
+                                {{ data?.isCompleted ? 'Yes' : 'No' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-item">
+                            <label>Paid:</label>
+                            <span class="badge" [ngClass]="data?.isPaid ? 'bg-success' : 'bg-secondary'">
+                                {{ data?.isPaid ? 'Yes' : 'No' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

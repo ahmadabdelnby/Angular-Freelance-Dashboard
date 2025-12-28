@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-skill-card',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './skill-card.html',
   styleUrl: './skill-card.scss',
 })

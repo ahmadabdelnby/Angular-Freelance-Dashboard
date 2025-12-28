@@ -1,0 +1,106 @@
+.payment-card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #14a800 0%, #1a8f5a 100%);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+
+    .payment-info {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      
+      .payment-id {
+        font-family: monospace;
+        font-size: 0.85rem;
+        opacity: 0.9;
+      }
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.65rem;
+    }
+  }
+
+  .card-body {
+    padding: 1.25rem;
+    flex: 1;
+
+    .amount-section {
+      text-align: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e9ecef;
+
+      .amount {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #14a800;
+        margin: 0;
+      }
+    }
+
+    .payment-details {
+      .detail-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0;
+        font-size: 0.9rem;
+
+        i {
+          color: #14a800;
+          font-size: 1rem;
+        }
+
+        strong {
+          margin-right: 0.25rem;
+        }
+      }
+    }
+
+    .payment-date {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #e9ecef;
+
+      i {
+        color: #6c757d;
+      }
+    }
+  }
+
+  .card-footer {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    border-top: 1px solid #e9ecef;
+
+    .btn {
+      flex: 1;
+      font-size: 0.875rem;
+      padding: 0.5rem;
+
+      i {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@import '../shared-card-styles.scss';
+
+.speciality-card {
+  @include card-base;
+
+
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--herfa-primary);
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+    
+    .card-title {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+      
+      strong {
+        color: var(--herfa-primary);
+        font-weight: 600;
+      }
+    }
+    
+    .text-muted {
+      font-size: 0.85rem;
+      color: var(--herfa-gray);
+      
+      strong {
+        color: #333;
+        font-weight: 600;
+      }
+    }
+    
+    button {
+      margin-top: 0.5rem;
+      font-weight: 500;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      transition: all 0.2s;
+      
+      &.btn-secondary {
+        background-color: var(--herfa-primary);
+        border-color: var(--herfa-primary);
+        color: white;
+        
+        &:hover {
+          background-color: var(--herfa-primary-hover);
+          transform: translateY(-1px);
+        }
+      }
+      
+      &.btn-danger {
+        &:hover {
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }

@@ -1,0 +1,29 @@
+.navbar {
+  .navbar-brand {
+    color: var(--herfa-primary) !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  
+  .form-control {
+    &:focus {
+      border-color: var(--herfa-primary);
+      box-shadow: none;
+    }
+  }
+  
+  .btn {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  
+  .nav-link {
+    color: #333;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: var(--herfa-primary);
+    }
+  }
+}

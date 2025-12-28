@@ -1,0 +1,165 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>
+        <i class="bi bi-credit-card-fill me-2"></i>
+        Payment Details
+      </h2>
+      <button class="close-btn" (click)="close()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Amount Section -->
+      <div class="amount-section">
+        <div class="amount-display">
+          <h1 class="amount">{{ formatCurrency(data?.amount) }}</h1>
+          <span [ngClass]="getStatusClass()">{{ data?.status || 'Unknown' }}</span>
+        </div>
+      </div>
+
+      <!-- Payment Info -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-info-circle me-2"></i>
+          Payment Information
+        </h5>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Payment ID</label>
+            <span class="value monospace">{{ data?._id || 'N/A' }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Currency</label>
+            <span class="value">{{ data?.currency || 'USD' }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Payment Method</label>
+            <span class="value">
+              <i class="bi bi-wallet2 me-1"></i>
+              {{ data?.paymentMethod || 'N/A' }}
+            </span>
+          </div>
+
+          <div class="info-item" *ngIf="data?.transactionId">
+            <label>Transaction ID</label>
+            <span class="value monospace">{{ data?.transactionId }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parties Section -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-people me-2"></i>
+          Parties Involved
+        </h5>
+        
+        <div class="parties-grid">
+          <div class="party-card" *ngIf="data?.payer">
+            <div class="party-header">
+              <i class="bi bi-person-fill"></i>
+              <span>Payer</span>
+            </div>
+            <div class="party-details">
+              <h6>{{ data.payer.first_name }} {{ data.payer.last_name }}</h6>
+              <p class="text-muted mb-1">
+                <i class="bi bi-envelope me-1"></i>
+                {{ data.payer.email }}
+              </p>
+              <p class="text-muted mb-0" *ngIf="data.payer.country">
+                <i class="bi bi-geo-alt me-1"></i>
+                {{ data.payer.country.name }}
+              </p>
+            </div>
+          </div>
+
+          <div class="party-card" *ngIf="data?.payee">
+            <div class="party-header">
+              <i class="bi bi-person-check-fill"></i>
+              <span>Payee</span>
+            </div>
+            <div class="party-details">
+              <h6>{{ data.payee.first_name }} {{ data.payee.last_name }}</h6>
+              <p class="text-muted mb-1">
+                <i class="bi bi-envelope me-1"></i>
+                {{ data.payee.email }}
+              </p>
+              <p class="text-muted mb-0" *ngIf="data.payee.country">
+                <i class="bi bi-geo-alt me-1"></i>
+                {{ data.payee.country.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contract Section -->
+      <div class="info-section" *ngIf="data?.contract">
+        <h5 class="section-title">
+          <i class="bi bi-file-text me-2"></i>
+          Related Contract
+        </h5>
+        
+        <div class="contract-card">
+          <div class="contract-info">
+            <h6>{{ data.contract.title || 'Untitled Contract' }}</h6>
+            <p class="text-muted mb-1" *ngIf="data.contract.description">
+              {{ data.contract.description }}
+            </p>
+            <div class="contract-meta">
+              <span class="badge bg-secondary" *ngIf="data.contract.status">
+                {{ data.contract.status }}
+              </span>
+              <span class="text-muted" *ngIf="data.contract.budget">
+                Budget: {{ formatCurrency(data.contract.budget) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dates Section -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-calendar-event me-2"></i>
+          Timeline
+        </h5>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Created At</label>
+            <span class="value">{{ formatDate(data?.createdAt) }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Last Updated</label>
+            <span class="value">{{ formatDate(data?.updatedAt) }}</span>
+          </div>
+
+          <div class="info-item" *ngIf="data?.processedAt">
+            <label>Processed At</label>
+            <span class="value">{{ formatDate(data?.processedAt) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Notes -->
+      <div class="info-section" *ngIf="data?.notes">
+        <h5 class="section-title">
+          <i class="bi bi-sticky me-2"></i>
+          Notes
+        </h5>
+        <p class="notes-text">{{ data.notes }}</p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="close()">Close</button>
+    </div>
+  </div>
+</div>

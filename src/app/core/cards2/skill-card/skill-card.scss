@@ -1,0 +1,5 @@
+@import '../shared-card-styles.scss';
+
+.skill-card {
+  @include card-base;
+}

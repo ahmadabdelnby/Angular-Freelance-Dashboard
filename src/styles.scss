@@ -1,2 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Herfa Brand Colors */
+:root {
+  --herfa-primary: #14a800;
+  --herfa-primary-hover: #119200;
+  --herfa-primary-light: #e8f5e6;
+  --herfa-white: #ffffff;
+  --herfa-gray-light: #f8f9fa;
+  --herfa-gray: #6c757d;
+  --herfa-border: #e0e0e0;
+}
+
+body {
+  background-color: var(--herfa-white);
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Primary Button Override */
+.btn-primary {
+  background-color: var(--herfa-primary) !important;
+  border-color: var(--herfa-primary) !important;
+  color: white !important;
+  
+  &:hover, &:focus {
+    background-color: var(--herfa-primary-hover) !important;
+    border-color: var(--herfa-primary-hover) !important;
+  }
+}
+
+.btn-outline-primary {
+  color: var(--herfa-primary) !important;
+  border-color: var(--herfa-primary) !important;
+  
+  &:hover, &:focus {
+    background-color: var(--herfa-primary) !important;
+    border-color: var(--herfa-primary) !important;
+    color: white !important;
+  }
+}
+
+/* Links */
+a {
+  color: var(--herfa-primary);
+  text-decoration: none;
+  
+  &:hover {
+    color: var(--herfa-primary-hover);
+  }
+}
+
+/* Form Controls */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--herfa-primary);
+  box-shadow: 0 0 0 0.2rem rgba(20, 168, 0, 0.15);
+}

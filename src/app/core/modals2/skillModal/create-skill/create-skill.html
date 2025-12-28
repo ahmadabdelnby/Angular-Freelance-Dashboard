@@ -1,105 +1,82 @@
-<div class="modal-container">
-  <h3>{{ mode === 'create' ? 'Add New' : 'Update' }}</h3>
-
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="form-group">
-      <label>Name</label>
-      <input formControlName="name" class="form-control" />
+﻿<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h4 class="modal-title mb-0">
+        <i class="bi bi-star-fill me-2"></i>
+        {{ mode === 'create' ? 'Create New Skill' : 'Edit Skill' }}
+      </h4>
+      <button class="btn-close" (click)="close()" aria-label="Close"></button>
     </div>
 
-    <div class="form-group">
-      <label>Description</label>
-      <textarea formControlName="description" class="form-control"></textarea>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body">
+      <div class="form-section">
+        <h5 class="section-title">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          Skill Information
+        </h5>
+        
+        <div class="mb-3">
+          <label for="name" class="form-label">
+            Skill Name <span class="text-danger">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name" 
+            class="form-control"
+            placeholder="Enter skill name"
+          />
+        </div>
 
-    <div class="form-group" *ngIf="specialties.length">
-      <label>Specialty</label>
-      <select formControlName="specialty" class="form-control">
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            class="form-control" 
+            rows="4"
+            placeholder="Enter skill description"
+          ></textarea>
+        </div>
 
-        <option value="">
-          {{ specialties.length ? 'Select specialty' : 'Loading...' }}
-        </option>
-        <option *ngFor="let s of specialties" [value]="s._id.toString()">
-          {{ s.name }}
-        </option>
-      </select>
-    </div>
+        <div class="mb-3" *ngIf="specialties.length">
+          <label for="specialty" class="form-label">Specialty</label>
+          <select 
+            id="specialty" 
+            formControlName="specialty" 
+            class="form-select"
+          >
+            <option value="">{{ specialties.length ? 'Select specialty' : 'Loading...' }}</option>
+            <option *ngFor="let s of specialties" [value]="s._id.toString()">
+              {{ s.name }}
+            </option>
+          </select>
+        </div>
 
-    <div class="form-group form-check">
-      <input type="checkbox" id="isActive" class="form-check-input" formControlName="isActive" />
-      <label for="isActive" class="form-check-label">
-        Active
-      </label>
-    </div>
-
-    <div class="modal-actions">
-      <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
-      <button type="submit" class="btn btn-primary">
-        {{ mode === 'create' ? 'Add' : 'Update' }}
-      </button>
-    </div>
-  </form>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="modal-backdrop">
-  <div class="modal-content">
-    <h2>{{ mode === 'create' ? 'Add Skill' : 'Update Skill' }}</h2>
-
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" type="text" formControlName="name" class="form-control" />
+        <div class="form-check">
+          <input 
+            type="checkbox" 
+            id="isActive" 
+            formControlName="isActive" 
+            class="form-check-input"
+          />
+          <label for="isActive" class="form-check-label">
+            <i class="bi bi-check-circle me-1"></i>
+            Active Status
+          </label>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" formControlName="description" class="form-control"></textarea>
-      </div>
-
-      <div class="modal-actions mt-3">
-        <button type="submit" class="btn btn-primary">
-          {{ mode === 'create' ? 'Add' : 'Update' }}
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">
+          <i class="bi bi-x-circle me-1"></i>
+          Cancel
         </button>
-        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-circle me-1"></i>
+          {{ mode === 'create' ? 'Create Skill' : 'Update Skill' }}
+        </button>
       </div>
     </form>
   </div>
-</div>  -->
+</div>

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-job-card',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './job-card.html',
   styleUrl: './job-card.scss',

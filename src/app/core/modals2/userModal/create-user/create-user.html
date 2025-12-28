@@ -1,0 +1,335 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ mode === 'create' ? 'Create New User' : 'Update User' }}</h3>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        
+        <!-- Section: Account Information -->
+        <h5 class="section-header"><i class="bi bi-person-badge me-2"></i>Account Information</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Username <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              class="form-control" 
+              formControlName="username"
+              [class.is-invalid]="form.get('username')?.invalid && form.get('username')?.touched"
+            />
+            <div class="invalid-feedback" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">
+              {{ getErrorMessage('username') }}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Email <span class="text-danger">*</span></label>
+            <input 
+              type="email" 
+              class="form-control" 
+              formControlName="email"
+              [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+            />
+            <div class="invalid-feedback" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+              {{ getErrorMessage('email') }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              Password 
+              <span class="text-danger" *ngIf="mode === 'create'">*</span>
+              <small class="text-muted" *ngIf="mode === 'update'">(leave empty to keep current)</small>
+            </label>
+            <input 
+              type="password" 
+              class="form-control" 
+              formControlName="password"
+              [class.is-invalid]="form.get('password')?.invalid && form.get('password')?.touched"
+              placeholder="Enter password"
+            />
+            <div class="invalid-feedback" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+              {{ getErrorMessage('password') }}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Role <span class="text-danger">*</span></label>
+            <select class="form-select" formControlName="role">
+              <option *ngFor="let role of roles" [value]="role">{{ role | titlecase }}</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Section: Personal Information -->
+        <h5 class="section-header"><i class="bi bi-person-fill me-2"></i>Personal Information</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">First Name <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              class="form-control" 
+              formControlName="first_name"
+              [class.is-invalid]="form.get('first_name')?.invalid && form.get('first_name')?.touched"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Last Name <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              class="form-control" 
+              formControlName="last_name"
+              [class.is-invalid]="form.get('last_name')?.invalid && form.get('last_name')?.touched"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Gender <span class="text-danger">*</span></label>
+            <select class="form-select" formControlName="gender">
+              <option value="">Select Gender</option>
+              <option *ngFor="let gender of genders" [value]="gender">{{ gender | titlecase }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Birth Date</label>
+            <input 
+              type="date" 
+              class="form-control" 
+              formControlName="birthdate"
+            />
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Phone Number</label>
+            <input 
+              type="tel" 
+              class="form-control" 
+              formControlName="phone_number"
+              placeholder="+1234567890"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Country</label>
+          <select class="form-select" formControlName="country">
+            <option value="">Select Country</option>
+            <option *ngFor="let country of countries" [value]="country._id">
+              {{ country.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">About Me</label>
+          <textarea 
+            class="form-control" 
+            formControlName="aboutMe" 
+            rows="4"
+            placeholder="Brief description about yourself..."
+          ></textarea>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Section: Professional Information -->
+        <h5 class="section-header"><i class="bi bi-briefcase-fill me-2"></i>Professional Information</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Category</label>
+            <select class="form-select" formControlName="category">
+              <option value="">Select Category</option>
+              <option *ngFor="let cat of categories" [value]="cat._id">
+                {{ cat.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Specialty</label>
+            <select class="form-select" formControlName="specialty">
+              <option value="">Select Specialty</option>
+              <option *ngFor="let spec of specialties" [value]="spec._id">
+                {{ spec.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Hourly Rate ($)</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              formControlName="hourlyRate"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+            />
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Availability</label>
+            <select class="form-select" formControlName="availability">
+              <option *ngFor="let avail of availabilityOptions" [value]="avail">
+                {{ formatAvailability(avail) }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Timezone</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              formControlName="timezone"
+              placeholder="UTC"
+            />
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="mb-3">
+          <label class="form-label">Skills</label>
+          <select class="form-select" formControlName="skills" multiple size="5">
+            <option *ngFor="let skill of skills" [value]="skill._id">
+              {{ skill.name }}
+            </option>
+          </select>
+          <small class="text-muted">Hold Ctrl/Cmd to select multiple skills</small>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Section: Social Links -->
+        <h5 class="section-header"><i class="bi bi-share-fill me-2"></i>Social Links</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><i class="bi bi-linkedin me-1"></i> LinkedIn</label>
+            <input 
+              type="url" 
+              class="form-control" 
+              formControlName="linkedin"
+              placeholder="https://linkedin.com/in/username"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><i class="bi bi-github me-1"></i> GitHub</label>
+            <input 
+              type="url" 
+              class="form-control" 
+              formControlName="github"
+              placeholder="https://github.com/username"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><i class="bi bi-globe me-1"></i> Portfolio</label>
+            <input 
+              type="url" 
+              class="form-control" 
+              formControlName="portfolio"
+              placeholder="https://yourportfolio.com"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><i class="bi bi-twitter me-1"></i> Twitter</label>
+            <input 
+              type="url" 
+              class="form-control" 
+              formControlName="twitter"
+              placeholder="https://twitter.com/username"
+            />
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Section: Verification & Status -->
+        <h5 class="section-header"><i class="bi bi-shield-check me-2"></i>Verification & Status</h5>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                formControlName="isEmailVerified" 
+                id="isEmailVerified"
+              />
+              <label class="form-check-label" for="isEmailVerified">
+                <i class="bi bi-envelope-check me-1"></i> Email Verified
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                formControlName="isPhoneVerified" 
+                id="isPhoneVerified"
+              />
+              <label class="form-check-label" for="isPhoneVerified">
+                <i class="bi bi-telephone-check me-1"></i> Phone Verified
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                formControlName="isIdentityVerified" 
+                id="isIdentityVerified"
+              />
+              <label class="form-check-label" for="isIdentityVerified">
+                <i class="bi bi-person-check me-1"></i> Identity Verified
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-check mb-3">
+          <input 
+            class="form-check-input" 
+            type="checkbox" 
+            formControlName="isActive" 
+            id="isActive"
+          />
+          <label class="form-check-label" for="isActive">
+            <i class="bi bi-check-circle me-1"></i> Active Account
+          </label>
+        </div>
+
+        <!-- Buttons -->
+        <div class="modal-footer mt-4">
+          <button type="button" class="btn btn-secondary" (click)="close()">
+            <i class="bi bi-x-circle me-1"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi me-1" [ngClass]="mode === 'create' ? 'bi-plus-circle' : 'bi-save'"></i>
+            {{ mode === 'create' ? 'Create User' : 'Update User' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

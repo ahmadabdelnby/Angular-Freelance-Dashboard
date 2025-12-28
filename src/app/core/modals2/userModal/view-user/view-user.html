@@ -1,25 +1,321 @@
 <div class="modal-backdrop" (click)="close()">
     <div class="modal-container" (click)="$event.stopPropagation()">
         <!-- Header -->
-        <div class="modal-header d-flex justify-content-between align-items-center">
-            <h5 class="modal-title mb-3 text-decoration-underline">User Details</h5>
-            <!-- Close button -->
-            <button class="close-btn" (click)="close()">x</button>
+        <div class="modal-header">
+            <h4 class="modal-title mb-0">
+                <i class="bi bi-person-circle me-2"></i>
+                User Details
+            </h4>
+            <button class="btn-close" (click)="close()" aria-label="Close"></button>
         </div>
+        
         <!-- Body -->
         <div class="modal-body">
-            <p><strong>User ID:</strong> {{ data?._id }}</p>
-            <p><strong>Username:</strong> {{ data?.username }}</p>
-            <p><strong>Email:</strong> {{ data?.email }}</p>
-            <p><strong>First Name:</strong> {{ data?.first_name }}</p>
-            <p><strong>Last Name:</strong> {{ data?.last_name }}</p>
-            <p><strong>Phone:</strong> {{ data?.phone_number }}</p>
-            <p><strong>Gender:</strong> {{ data?.gender }}</p>
-            <p><strong>Birth Date:</strong> {{ data?.birthdate }}</p>
-            <p><strong>Country:</strong> {{ data?.country }}</p>
-            <p><strong>About Me:</strong> {{ data?.aboutMe }}</p>
-            <p><strong>Category:</strong> {{ data?.category?.name }}</p>
-            <p><strong>Speciality:</strong> {{ data?.specialty?.name }}</p>
+            <!-- Profile Picture -->
+            <div class="text-center mb-4">
+                <img [src]="data?.profile_picture || '/user-default-img.png'" 
+                     alt="Profile Picture" 
+                     class="profile-pic-modal">
+            </div>
+
+            <!-- Basic Information -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Basic Information
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>User ID:</label>
+                            <span>{{ data?._id || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Username:</label>
+                            <span>{{ data?.username || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <span>{{ data?.email || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Role:</label>
+                            <span class="badge" [ngClass]="data?.role === 'admin' ? 'bg-danger' : 'bg-primary'">{{ data?.role || 'user' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Details -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-person-fill me-2"></i>
+                    Personal Details
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>First Name:</label>
+                            <span>{{ data?.first_name || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Last Name:</label>
+                            <span>{{ data?.last_name || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Gender:</label>
+                            <span class="text-capitalize">{{ data?.gender || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Birth Date:</label>
+                            <span>{{ data?.birthdate ? (data.birthdate | date:'mediumDate') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Phone:</label>
+                            <span>{{ data?.phone_number || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Country:</label>
+                            <span>{{ data?.country || 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Me -->
+            <div class="info-section" *ngIf="data?.aboutMe">
+                <h5 class="section-title">
+                    <i class="bi bi-card-text me-2"></i>
+                    About Me
+                </h5>
+                <p class="about-text">{{ data?.aboutMe }}</p>
+            </div>
+
+            <!-- Professional Information -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-briefcase-fill me-2"></i>
+                    Professional Information
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Category:</label>
+                            <span>{{ data?.category?.name || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Specialty:</label>
+                            <span>{{ data?.specialty?.name || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Hourly Rate:</label>
+                            <span>{{ data?.hourlyRate ? '$' + data.hourlyRate : 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Availability:</label>
+                            <span class="badge" 
+                                  [ngClass]="{
+                                    'bg-success': data?.availability === 'available',
+                                    'bg-warning': data?.availability === 'busy',
+                                    'bg-secondary': data?.availability === 'not_available'
+                                  }">
+                                {{ data?.availability || 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Timezone:</label>
+                            <span>{{ data?.timezone || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Response Time:</label>
+                            <span>{{ data?.responseTime ? data.responseTime + ' hours' : 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="info-section" *ngIf="data?.skills && data.skills.length > 0">
+                <h5 class="section-title">
+                    <i class="bi bi-star-fill me-2"></i>
+                    Skills
+                </h5>
+                <div class="skills-container">
+                    <span class="badge bg-primary me-2 mb-2" *ngFor="let skill of data?.skills">
+                        {{ skill?.name || skill }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div class="info-section" *ngIf="data?.languages && data.languages.length > 0">
+                <h5 class="section-title">
+                    <i class="bi bi-translate me-2"></i>
+                    Languages
+                </h5>
+                <div class="row g-2">
+                    <div class="col-md-6" *ngFor="let lang of data?.languages">
+                        <div class="info-item">
+                            <label>{{ lang?.name }}:</label>
+                            <span class="text-capitalize">{{ lang?.proficiency }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-graph-up me-2"></i>
+                    Statistics
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-value">{{ data?.completedJobs || 0 }}</div>
+                            <div class="stat-label">Completed Jobs</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-value">{{ data?.rehireRate || 0 }}%</div>
+                            <div class="stat-label">Rehire Rate</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-value">${{ data?.totalEarnings || 0 }}</div>
+                            <div class="stat-label">Total Earnings</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="info-item">
+                            <label>Current Balance:</label>
+                            <span class="text-success fw-bold">${{ data?.balance || 0 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verification Status -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-shield-check me-2"></i>
+                    Verification Status
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="verification-item">
+                            <i class="bi me-2" [ngClass]="data?.isEmailVerified ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'"></i>
+                            Email Verified
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="verification-item">
+                            <i class="bi me-2" [ngClass]="data?.isPhoneVerified ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'"></i>
+                            Phone Verified
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="verification-item">
+                            <i class="bi me-2" [ngClass]="data?.isIdentityVerified ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'"></i>
+                            Identity Verified
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="info-section" *ngIf="data?.socialLinks && (data.socialLinks.linkedin || data.socialLinks.github || data.socialLinks.portfolio || data.socialLinks.twitter)">
+                <h5 class="section-title">
+                    <i class="bi bi-share-fill me-2"></i>
+                    Social Links
+                </h5>
+                <div class="social-links">
+                    <a *ngIf="data?.socialLinks?.linkedin" [href]="data.socialLinks.linkedin" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                        <i class="bi bi-linkedin me-1"></i> LinkedIn
+                    </a>
+                    <a *ngIf="data?.socialLinks?.github" [href]="data.socialLinks.github" target="_blank" class="btn btn-sm btn-outline-dark me-2 mb-2">
+                        <i class="bi bi-github me-1"></i> GitHub
+                    </a>
+                    <a *ngIf="data?.socialLinks?.portfolio" [href]="data.socialLinks.portfolio" target="_blank" class="btn btn-sm btn-outline-info me-2 mb-2">
+                        <i class="bi bi-globe me-1"></i> Portfolio
+                    </a>
+                    <a *ngIf="data?.socialLinks?.twitter" [href]="data.socialLinks.twitter" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                        <i class="bi bi-twitter me-1"></i> Twitter
+                    </a>
+                </div>
+            </div>
+
+            <!-- Activity Status -->
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-activity me-2"></i>
+                    Activity
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Status:</label>
+                            <span>
+                                <i class="bi me-1" [ngClass]="data?.isOnline ? 'bi-circle-fill text-success' : 'bi-circle text-secondary'"></i>
+                                {{ data?.isOnline ? 'Online' : 'Offline' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Last Seen:</label>
+                            <span>{{ data?.lastSeen ? (data.lastSeen | date:'short') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Account Created:</label>
+                            <span>{{ data?.createdAt ? (data.createdAt | date:'medium') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Last Updated:</label>
+                            <span>{{ data?.updatedAt ? (data.updatedAt | date:'medium') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="close()">
+                <i class="bi bi-x-circle me-1"></i> Close
+            </button>
         </div>
     </div>
 </div>

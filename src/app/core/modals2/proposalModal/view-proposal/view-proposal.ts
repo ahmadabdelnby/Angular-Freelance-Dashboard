@@ -1,10 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-view-proposal',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, DatePipe],
   templateUrl: './view-proposal.html',
   styleUrl: './view-proposal.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewProposal {
   constructor(

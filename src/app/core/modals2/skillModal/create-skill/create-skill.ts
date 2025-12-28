@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './create-skill.html',
   styleUrl: './create-skill.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class CreateSkill {
   form: FormGroup;

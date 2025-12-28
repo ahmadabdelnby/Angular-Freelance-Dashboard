@@ -1,0 +1,167 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ mode === 'create' ? 'Create New Contract' : 'Edit Contract' }}</h2>
+      <button class="btn-close" (click)="close()" aria-label="Close">×</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body">
+      <!-- Job ID -->
+      <div class="mb-3">
+        <label for="job" class="form-label">Job ID *</label>
+        <input 
+          type="text" 
+          id="job" 
+          formControlName="job" 
+          class="form-control"
+          [class.is-invalid]="form.get('job')?.invalid && form.get('job')?.touched"
+          [readonly]="mode === 'update'"
+          placeholder="Enter Job ID"
+        />
+        <div class="invalid-feedback" *ngIf="form.get('job')?.invalid && form.get('job')?.touched">
+          {{ getErrorMessage('job') }}
+        </div>
+      </div>
+
+      <!-- Client ID -->
+      <div class="mb-3">
+        <label for="client" class="form-label">Client ID *</label>
+        <input 
+          type="text" 
+          id="client" 
+          formControlName="client" 
+          class="form-control"
+          [class.is-invalid]="form.get('client')?.invalid && form.get('client')?.touched"
+          [readonly]="mode === 'update'"
+          placeholder="Enter Client ID"
+        />
+        <div class="invalid-feedback" *ngIf="form.get('client')?.invalid && form.get('client')?.touched">
+          {{ getErrorMessage('client') }}
+        </div>
+      </div>
+
+      <!-- Freelancer ID -->
+      <div class="mb-3">
+        <label for="freelancer" class="form-label">Freelancer ID *</label>
+        <input 
+          type="text" 
+          id="freelancer" 
+          formControlName="freelancer" 
+          class="form-control"
+          [class.is-invalid]="form.get('freelancer')?.invalid && form.get('freelancer')?.touched"
+          [readonly]="mode === 'update'"
+          placeholder="Enter Freelancer ID"
+        />
+        <div class="invalid-feedback" *ngIf="form.get('freelancer')?.invalid && form.get('freelancer')?.touched">
+          {{ getErrorMessage('freelancer') }}
+        </div>
+      </div>
+
+      <!-- Proposal ID -->
+      <div class="mb-3">
+        <label for="proposal" class="form-label">Proposal ID</label>
+        <input 
+          type="text" 
+          id="proposal" 
+          formControlName="proposal" 
+          class="form-control"
+          [readonly]="mode === 'update'"
+          placeholder="Enter Proposal ID (optional)"
+        />
+      </div>
+
+      <!-- Budget Type & Agreed Amount -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="budgetType" class="form-label">Budget Type *</label>
+          <select 
+            id="budgetType" 
+            formControlName="budgetType" 
+            class="form-select"
+            [class.is-invalid]="form.get('budgetType')?.invalid && form.get('budgetType')?.touched"
+          >
+            <option value="fixed">Fixed Price</option>
+            <option value="hourly">Hourly Rate</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="agreedAmount" class="form-label">
+            Agreed Amount ($) *
+          </label>
+          <input 
+            type="number" 
+            id="agreedAmount" 
+            formControlName="agreedAmount" 
+            class="form-control"
+            [class.is-invalid]="form.get('agreedAmount')?.invalid && form.get('agreedAmount')?.touched"
+            min="1"
+            step="0.01"
+            placeholder="Enter agreed amount"
+          />
+          <div class="invalid-feedback" *ngIf="form.get('agreedAmount')?.invalid && form.get('agreedAmount')?.touched">
+            {{ getErrorMessage('agreedAmount') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select 
+          id="status" 
+          formControlName="status" 
+          class="form-select"
+        >
+          <option value="pending">Pending</option>
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="disputed">Disputed</option>
+        </select>
+      </div>
+
+      <!-- Start & End Dates -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="startDate" class="form-label">Start Date</label>
+          <input 
+            type="date" 
+            id="startDate" 
+            formControlName="startDate" 
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="endDate" class="form-label">End Date</label>
+          <input 
+            type="date" 
+            id="endDate" 
+            formControlName="endDate" 
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div class="mb-3">
+        <label for="terms" class="form-label">Contract Terms</label>
+        <textarea 
+          id="terms" 
+          formControlName="terms" 
+          class="form-control" 
+          rows="4"
+          placeholder="Enter contract terms and conditions (optional)"
+        ></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ mode === 'create' ? 'Create Contract' : 'Update Contract' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

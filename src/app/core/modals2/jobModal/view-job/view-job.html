@@ -1,32 +1,146 @@
 <div class="modal-backdrop" (click)="close()">
     <div class="modal-container" (click)="$event.stopPropagation()">
-        <!-- Header -->
-        <div class="modal-header d-flex justify-content-between align-items-center">
-            <h5 class="modal-title mb-3 text-decoration-underline">Job Details</h5>
-            <!-- Close button -->
-            <button class="close-btn" (click)="close()">x</button>
+        <div class="modal-header">
+            <h4 class="modal-title mb-0">
+                <i class="bi bi-briefcase me-2"></i>
+                Job Details
+            </h4>
+            <button class="btn-close" (click)="close()" aria-label="Close"></button>
         </div>
-        <!-- Body -->
+        
         <div class="modal-body">
-            <p><strong>Job ID:</strong> {{ data._id }}</p>
-            <p><strong>Job Title:</strong> {{ data.title }}</p>
-            <p><strong>Client:</strong> {{ data.client.email }}</p>
-            <p><strong>Job Description:</strong> {{ data.description }}</p>
-            <p><strong>Speciality:</strong> {{ data.specialty.name }}</p>
-            <p><strong>Type:</strong> {{ data.budget.type }}</p>
-            <p><strong>Budget:</strong> {{ data.budget.amount | currency }}</p>
-            <p><strong>Status:</strong> {{ data.status }}</p>
-            <p><strong>Experience Level:</strong> {{ data.experienceLevel }}</p>
+            <div class="text-center mb-4">
+                <span class="status-badge" [ngClass]="{
+                    'status-active': data?.status === 'open',
+                    'status-completed': data?.status === 'completed',
+                    'status-cancelled': data?.status === 'closed',
+                    'status-pending': data?.status === 'in_progress'
+                }">
+                    <i class="bi bi-circle-fill me-2"></i>
+                    {{ data?.status || 'N/A' }}
+                </span>
+            </div>
 
-            <p><strong>Job Description:</strong> {{ data.description }}</p>
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Basic Information
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Job ID:</label>
+                            <span class="text-muted small">{{ data?._id || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Title:</label>
+                            <span class="fw-bold">{{ data?.title || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Client:</label>
+                            <span>
+                                <i class="bi bi-person-circle me-1"></i>
+                                {{ data?.client?.email || 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Specialty:</label>
+                            <span class="badge bg-primary">{{ data?.specialty?.name || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Experience Level:</label>
+                            <span class="badge" [ngClass]="{
+                                'bg-success': data?.experienceLevel === 'expert',
+                                'bg-info': data?.experienceLevel === 'intermediate',
+                                'bg-warning': data?.experienceLevel === 'beginner'
+                            }">{{ data?.experienceLevel || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Duration:</label>
+                            <span>{{ data?.duration || 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-cash-stack me-2"></i>
+                    Budget Information
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Budget Type:</label>
+                            <span class="badge" [ngClass]="{
+                                'bg-info': data?.budget?.type === 'fixed',
+                                'bg-warning': data?.budget?.type === 'hourly'
+                            }">
+                                {{ data?.budget?.type || 'N/A' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Amount:</label>
+                            <span class="fw-bold text-success">
+                                {{ (data?.budget?.amount || 0) | currency:'USD':'symbol':'1.2-2' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section" *ngIf="data?.description">
+                <h5 class="section-title">
+                    <i class="bi bi-file-text me-2"></i>
+                    Description
+                </h5>
+                <p class="description-text">{{ data?.description }}</p>
+            </div>
+
+            <div class="info-section" *ngIf="data?.requiredSkills?.length > 0">
+                <h5 class="section-title">
+                    <i class="bi bi-tools me-2"></i>
+                    Required Skills
+                </h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <span *ngFor="let skill of data?.requiredSkills" class="badge bg-secondary">
+                        {{ skill?.name || skill }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h5 class="section-title">
+                    <i class="bi bi-calendar-event me-2"></i>
+                    Timeline
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Created At:</label>
+                            <span>{{ data?.createdAt ? (data?.createdAt | date:'medium') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <label>Last Updated:</label>
+                            <span>{{ data?.updatedAt ? (data?.updatedAt | date:'medium') : 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-
-
-<!-- <div class="modal">
-    <h3>{{ data?.title }}</h3>
-    <p>{{ data?.description }}</p>
-    <button class="btn btn-secondary" (click)="close()">Close</button>
-</div> -->

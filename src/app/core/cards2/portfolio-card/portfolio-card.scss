@@ -1,0 +1,24 @@
+@import '../shared-card-styles.scss';
+
+.portfolio-card {
+  @include card-base;
+  
+  .portfolio-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--herfa-light-bg);
+    
+    .portfolio-icon {
+      font-size: 2rem;
+      color: var(--herfa-primary);
+    }
+  }
+  
+  .card-title {
+    color: var(--herfa-primary);
+  }
+}

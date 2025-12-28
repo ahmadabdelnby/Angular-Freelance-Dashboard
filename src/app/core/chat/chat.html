@@ -1,0 +1,160 @@
+<div class="chat-container">
+  <!-- Conversations List -->
+  <div class="conversations-sidebar">
+    <div class="sidebar-header">
+      <h3 class="mb-0">
+        <i class="bi bi-chat-dots-fill me-2"></i>
+        Conversations
+      </h3>
+      <button class="btn btn-sm btn-success" (click)="loadConversations()">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+
+    <div class="conversations-list" *ngIf="!isLoading">
+      <div 
+        *ngFor="let conversation of conversations" 
+        class="conversation-item"
+        [class.active]="selectedConversation?._id === conversation._id"
+        (click)="selectConversation(conversation)"
+      >
+        <div class="conversation-avatar">
+          <img 
+            [src]="getOtherParticipant(conversation).profile_picture_url || 'assets/default-avatar.png'" 
+            [alt]="getParticipantName(getOtherParticipant(conversation))"
+          />
+          <span class="online-indicator" *ngIf="getOtherParticipant(conversation).isOnline"></span>
+        </div>
+        
+        <div class="conversation-info">
+          <div class="conversation-header">
+            <h6 class="conversation-name">
+              {{ getParticipantName(getOtherParticipant(conversation)) }}
+            </h6>
+            <span class="conversation-time">
+              {{ formatTime(conversation.lastMessageAt) }}
+            </span>
+          </div>
+          
+          <div class="conversation-preview">
+            <p class="mb-0">{{ getLastMessagePreview(conversation) }}</p>
+            <span class="badge bg-success" *ngIf="conversation.unreadCount > 0">
+              {{ conversation.unreadCount }}
+            </span>
+          </div>
+          
+          <div class="conversation-meta" *ngIf="conversation.job">
+            <i class="bi bi-briefcase me-1"></i>
+            <small class="text-muted">{{ conversation.job.title }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center py-4" *ngIf="conversations.length === 0">
+        <i class="bi bi-chat-dots text-muted" style="font-size: 3rem;"></i>
+        <p class="text-muted mt-3">No conversations yet</p>
+      </div>
+    </div>
+
+    <div class="text-center py-5" *ngIf="isLoading">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="chat-area">
+    <div *ngIf="!selectedConversation" class="no-conversation-selected">
+      <i class="bi bi-chat-text text-muted"></i>
+      <h4 class="text-muted mt-3">Select a conversation to start chatting</h4>
+    </div>
+
+    <div *ngIf="selectedConversation" class="chat-content">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="d-flex align-items-center">
+          <img 
+            [src]="getOtherParticipant(selectedConversation).profile_picture_url || 'assets/default-avatar.png'" 
+            [alt]="getParticipantName(getOtherParticipant(selectedConversation))"
+            class="chat-avatar"
+          />
+          <div class="ms-3">
+            <h5 class="mb-0">{{ getParticipantName(getOtherParticipant(selectedConversation)) }}</h5>
+            <small class="text-muted">
+              <i class="bi bi-envelope me-1"></i>
+              {{ getOtherParticipant(selectedConversation).email }}
+            </small>
+          </div>
+        </div>
+        
+        <div class="chat-actions">
+          <button class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-info-circle"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages-container">
+        <div *ngIf="isLoadingMessages" class="text-center py-4">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading messages...</span>
+          </div>
+        </div>
+
+        <div *ngIf="!isLoadingMessages && messages.length === 0" class="text-center py-4">
+          <i class="bi bi-chat-quote text-muted" style="font-size: 3rem;"></i>
+          <p class="text-muted mt-3">No messages yet. Start the conversation!</p>
+        </div>
+
+        <div class="message" 
+             *ngFor="let message of messages"
+             [class.sent]="isMessageFromCurrentUser(message)"
+             [class.received]="!isMessageFromCurrentUser(message)">
+          <div class="message-avatar" *ngIf="!isMessageFromCurrentUser(message)">
+            <img 
+              [src]="message.sender.profile_picture_url || 'assets/default-avatar.png'" 
+              [alt]="getParticipantName(message.sender)"
+            />
+          </div>
+          
+          <div class="message-content">
+            <div class="message-bubble">
+              <p class="mb-0">{{ message.content }}</p>
+            </div>
+            <div class="message-time">
+              <small>{{ formatTime(message.createdAt) }}</small>
+              <i class="bi bi-check-all ms-1" *ngIf="isMessageFromCurrentUser(message) && message.isRead"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message Input -->
+      <div class="message-input-container">
+        <div class="message-input-wrapper">
+          <button class="btn btn-link text-muted">
+            <i class="bi bi-paperclip"></i>
+          </button>
+          
+          <input 
+            type="text" 
+            class="form-control message-input"
+            placeholder="Type a message..."
+            [(ngModel)]="newMessage"
+            (keyup.enter)="sendMessage()"
+          />
+          
+          <button 
+            class="btn btn-success btn-send"
+            (click)="sendMessage()"
+            [disabled]="!newMessage.trim()"
+          >
+            <i class="bi bi-send-fill"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

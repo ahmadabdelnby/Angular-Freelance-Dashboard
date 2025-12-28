@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-portfolio-card',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './portfolio-card.html',
   styleUrl: './portfolio-card.scss',
 })

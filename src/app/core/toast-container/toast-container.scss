@@ -1,0 +1,43 @@
+.toast-container {
+  .toast {
+    min-width: 300px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    
+    animation: slideInRight 0.3s ease-out;
+    
+    &.hide {
+      animation: slideOutRight 0.3s ease-in;
+    }
+  }
+
+  .toast-body {
+    font-size: 0.95rem;
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

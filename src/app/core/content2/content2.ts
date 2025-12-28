@@ -244,7 +244,7 @@ export class Content2 implements OnInit {
      Card Injectors
      ================================ */
 
-  private cardInjectors = new Map<string, Injector>();
+  cardInjectors = new Map<string, Injector>();
 
   /* ================================
      Action Registry
@@ -271,21 +271,59 @@ export class Content2 implements OnInit {
       this.selectedCollection = name;
       this.isCreatable = !!name && this.creatableCollections.includes(name);
       this.loadComponent(name);
-      firstValueFrom(this.collectionService.getAll('specialties')).then(list => {
-        this.specialties = list;
-      });
-      firstValueFrom(this.collectionService.getAll('categories')).then(list => {
-        this.categories = list;
-      });
+      
+      // Load specialties and categories only once when needed
+      // Don't load them on every collection change
+      if (name && this.specialties.length === 0) {
+        this.loadSpecialties();
+      }
+      
+      if (name && this.categories.length === 0) {
+        this.loadCategories();
+      }
 
     });
 
     this.collectionService.getDocuments().subscribe(docs => {
       this.documents = Array.isArray(docs) ? docs : Object.values(docs || {});
       this.buildCardInjectors();
-      console.log(this.documents);
+      console.log('📦 Documents received:', this.documents.length, 'items');
+      console.log('🎴 Current component:', this.currentComponent);
+      console.log('💉 Card injectors built:', this.cardInjectors.size);
     });
 
+  }
+
+  /* ================================
+     Load Helper Methods
+     ================================ */
+
+  private loadSpecialties(): void {
+    firstValueFrom(this.collectionService.getAll('specialties'))
+      .then(list => {
+        this.specialties = list;
+        console.log('Specialties loaded:', list);
+      })
+      .catch(err => {
+        console.warn('Could not load specialties:', err.status, err.statusText);
+        // Try alternative endpoint name
+        if (err.status === 400 || err.status === 404) {
+          console.log('Specialties endpoint not available, using empty array');
+          this.specialties = [];
+        }
+      });
+  }
+
+  private loadCategories(): void {
+    firstValueFrom(this.collectionService.getAll('categories'))
+      .then(list => {
+        this.categories = list;
+        console.log('Categories loaded:', list);
+      })
+      .catch(err => {
+        console.error('Error loading categories:', err);
+        this.categories = [];
+      });
   }
 
   /* ================================
@@ -296,8 +334,13 @@ export class Content2 implements OnInit {
     this.cardInjectors.clear();
 
     for (const doc of this.documents) {
+      console.log('🔑 Building injector for document:', doc);
+      console.log('🆔 Document ID:', doc._id, 'Type:', typeof doc._id);
+      
+      const docId = doc._id || doc.id || JSON.stringify(doc);
+      
       this.cardInjectors.set(
-        doc._id,
+        docId,
         Injector.create({
           providers: [
             { provide: 'data', useValue: doc },
@@ -314,11 +357,15 @@ export class Content2 implements OnInit {
   }
 
   getCardInjector(id: string): Injector | undefined {
-    return this.cardInjectors.get(id);
+    const injector = this.cardInjectors.get(id);
+    console.log(`🔍 Getting injector for ID: ${id}, Found: ${!!injector}`);
+    return injector;
   }
 
   trackById(_: number, item: any) {
-    return item._id;
+    const id = item._id || item.id || JSON.stringify(item);
+    console.log('🎯 TrackBy ID:', id);
+    return id;
   }
 
   /* ================================
@@ -358,11 +405,24 @@ export class Content2 implements OnInit {
   async loadComponent(collectionName: string | null) {
     if (!collectionName) {
       this.currentComponent = null;
+      console.log('❌ No collection selected');
       return;
     }
 
     const loader = componentRegistry[collectionName];
-    this.currentComponent = loader ? await loader() : null;
+    if (!loader) {
+      console.warn(`⚠️ No card component registered for: ${collectionName}`);
+      this.currentComponent = null;
+      return;
+    }
+    
+    try {
+      this.currentComponent = await loader();
+      console.log(`✅ Card component loaded for: ${collectionName}`, this.currentComponent);
+    } catch (error) {
+      console.error(`❌ Failed to load component for ${collectionName}:`, error);
+      this.currentComponent = null;
+    }
   }
 
   /* ================================

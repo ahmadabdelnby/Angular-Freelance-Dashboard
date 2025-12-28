@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './create-country.html',
   styleUrl: './create-country.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class CreateCountry {
   form: FormGroup;

@@ -1,29 +1,302 @@
-// .modal-backdrop {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0,0,0,0.25);
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   z-index: 1050;
-// }
-
-.modal-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  min-width: 350px;
-  max-width: 500px;
-  width: 90%;
-  z-index: 1060; /* higher than backdrop */
+.modal-backdrop {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999 !important;
+    animation: fadeIn 0.2s ease-in;
 }
 
+.modal-container {
+    background: white;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 95%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+    overflow: hidden;
+}
 
+.modal-header {
+    background: linear-gradient(135deg, #14a800 0%, #1a8f5a 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: none;
 
+    .modal-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        margin: 0;
+
+        i {
+            font-size: 1.75rem;
+        }
+    }
+
+    .btn-close {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 1.25rem;
+        opacity: 1;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+    }
+}
+
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+    flex: 1;
+    background-color: white;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+
+        &:hover {
+            background: #555;
+        }
+    }
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #f0f0f0;
+
+    &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #14a800;
+
+        i {
+            color: #14a800;
+            font-size: 1.25rem;
+        }
+    }
+}
+
+.form-label {
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+
+    .text-danger {
+        color: #dc3545;
+        margin-left: 2px;
+    }
+
+    small {
+        font-weight: 400;
+        color: #6c757d;
+        margin-left: 0.5rem;
+    }
+}
+
+.form-control,
+.form-select {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+
+    &:focus {
+        border-color: #14a800;
+        box-shadow: 0 0 0 0.2rem rgba(20, 168, 0, 0.15);
+    }
+
+    &.is-invalid {
+        border-color: #dc3545;
+
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15);
+        }
+    }
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-check {
+    padding-left: 1.75rem;
+
+    .form-check-input {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-top: 0.15rem;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:checked {
+            background-color: #14a800;
+            border-color: #14a800;
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(20, 168, 0, 0.15);
+        }
+    }
+
+    .form-check-label {
+        margin-left: 0.5rem;
+        cursor: pointer;
+        font-size: 0.95rem;
+    }
+}
+
+.text-muted {
+    color: #6c757d;
+    font-size: 0.875rem;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 2px solid #f0f0f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    background: #fafafa;
+
+    .btn {
+        padding: 0.65rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.95rem;
+
+        &.btn-secondary {
+            background-color: #6c757d;
+            color: white;
+
+            &:hover {
+                background-color: #5a6268;
+                transform: translateY(-1px);
+            }
+        }
+
+        &.btn-primary {
+            background: linear-gradient(135deg, #14a800 0%, #1a8f5a 100%);
+            color: white;
+
+            &:hover:not(:disabled) {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(20, 168, 0, 0.4);
+            }
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .modal-container {
+        width: 98%;
+        max-height: 95vh;
+    }
+
+    .modal-header {
+        padding: 1.25rem 1.5rem;
+
+        .modal-title {
+            font-size: 1.25rem;
+
+            i {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .modal-footer {
+        padding: 1.25rem 1.5rem;
+    }
+}
