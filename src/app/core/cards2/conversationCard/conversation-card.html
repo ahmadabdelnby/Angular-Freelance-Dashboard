@@ -15,15 +15,6 @@
       <p class="participants-names">{{ getParticipantsNames() }}</p>
     </div>
 
-    <div class="message-preview mb-3" *ngIf="document?.lastMessage">
-      <h6 class="section-label">
-        <i class="bi bi-chat-left-text me-2"></i>
-        Last Message
-      </h6>
-      <p class="message-text">{{ getLastMessagePreview() }}</p>
-      <small class="text-muted">{{ formatDate(document?.lastMessageAt) }}</small>
-    </div>
-
     <div class="conversation-stats">
       <div class="stat-item">
         <i class="bi bi-envelope-fill me-1"></i>

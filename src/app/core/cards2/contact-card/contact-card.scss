@@ -1,0 +1,81 @@
+.contact-card {
+  border: 1px solid var(--herfa-border);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  background: white;
+  min-width: 280px;
+  max-width: 350px;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+    border-color: var(--herfa-primary);
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  // Card Title (Name)
+  .card-title {
+    font-size: 1.1rem;
+    color: #212529;
+    margin-bottom: 0.5rem;
+  }
+  
+  // Card Text
+  .card-text {
+    font-size: 0.9rem;
+    word-break: break-word;
+    
+    i {
+      color: var(--herfa-primary);
+    }
+  }
+  
+  // Status Badge
+  .badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+  }
+  
+  // Buttons
+  .btn {
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-1px);
+    }
+    
+    i {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .btn-outline-primary {
+    border-color: var(--herfa-primary);
+    color: var(--herfa-primary);
+    
+    &:hover {
+      background: var(--herfa-primary);
+      color: white;
+    }
+  }
+  
+  .btn-outline-danger {
+    &:hover {
+      background: #dc3545;
+      border-color: #dc3545;
+      color: white;
+    }
+  }
+}

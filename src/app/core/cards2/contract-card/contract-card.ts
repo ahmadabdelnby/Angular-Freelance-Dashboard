@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-contract-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TitleCasePipe],
   templateUrl: './contract-card.html',
   styleUrl: './contract-card.scss',
 })

@@ -13,9 +13,10 @@
         <div class="modal-body">
             <!-- Profile Picture -->
             <div class="text-center mb-4">
-                <img [src]="data?.profile_picture || '/user-default-img.png'" 
+                <img [src]="getImageUrl(data?.profile_picture)" 
                      alt="Profile Picture" 
-                     class="profile-pic-modal">
+                     class="profile-pic-modal"
+                     (error)="$event.target.src='/user-default-img.png'">
             </div>
 
             <!-- Basic Information -->
@@ -129,7 +130,7 @@
                     <div class="col-md-6">
                         <div class="info-item">
                             <label>Hourly Rate:</label>
-                            <span>{{ data?.hourlyRate ? '$' + data.hourlyRate : 'N/A' }}</span>
+                            <span>{{ data?.hourlyRate ? ('$' + (data.hourlyRate | number:'1.2-2')) : 'N/A' }}</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -204,20 +205,20 @@
                     </div>
                     <div class="col-md-4">
                         <div class="stat-card">
-                            <div class="stat-value">{{ data?.rehireRate || 0 }}%</div>
+                            <div class="stat-value">{{ data?.rehireRate || 0 | number:'1.2-2' }}%</div>
                             <div class="stat-label">Rehire Rate</div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="stat-card">
-                            <div class="stat-value">${{ data?.totalEarnings || 0 }}</div>
+                            <div class="stat-value">${{ data?.totalEarnings || 0 | number:'1.2-2' }}</div>
                             <div class="stat-label">Total Earnings</div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="info-item">
                             <label>Current Balance:</label>
-                            <span class="text-success fw-bold">${{ data?.balance || 0 }}</span>
+                            <span class="text-success fw-bold">${{ data?.balance || 0 | number:'1.2-2' }}</span>
                         </div>
                     </div>
                 </div>

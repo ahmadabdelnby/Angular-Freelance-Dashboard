@@ -23,7 +23,7 @@ export class Sidebar2 implements OnInit {
     {
       name: 'User Management',
       icon: 'bi-people-fill',
-      collections: ['users', 'portfolio', 'favorites'],
+      collections: ['users', 'portfolio', 'favorites', 'countries'],
       isOpen: false
     },
     {
@@ -53,7 +53,7 @@ export class Sidebar2 implements OnInit {
     {
       name: 'Settings',
       icon: 'bi-gear-fill',
-      collections: ['countries'],
+      collections: ['platform-settings', 'contacts', 'activity-logs'],
       isOpen: false
     }
   ];

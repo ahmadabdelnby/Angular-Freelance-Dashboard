@@ -5,6 +5,7 @@ import { AdminProfile } from './core/admin-profile/admin-profile';
 import { Main } from './core/main/main';
 import { CollectionPage } from './pages/collection-page/collection-page';
 import { DashboardHome } from './pages/dashboard-home/dashboard-home';
+import { PlatformSettingsPage } from './pages/platform-settings/platform-settings';
 import { authGuard } from './guards/auth.guard';
 import { loginGuard } from './guards/login.guard';
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
       canActivate: [authGuard],
       children: [
         { path: '', component: DashboardHome },
+        { path: 'platform-settings', component: PlatformSettingsPage },
         { path: ':collection', component: CollectionPage }
       ]
     },

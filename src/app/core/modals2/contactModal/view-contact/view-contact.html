@@ -1,0 +1,177 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>
+        <i class="bi bi-envelope-fill me-2"></i>
+        Contact Report
+      </h2>
+      <button class="close-btn" (click)="close()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Status Section -->
+      <div class="status-section">
+        <div class="status-display">
+          <span [ngClass]="getStatusClass()">{{ getStatusLabel() }}</span>
+          <small class="text-muted">Submitted: {{ formatDate(data?.createdAt) }}</small>
+        </div>
+      </div>
+
+      <!-- Contact Person Info -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-person-fill me-2"></i>
+          Contact Information
+        </h5>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Full Name</label>
+            <span class="value">{{ data?.fullName || 'N/A' }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Email</label>
+            <span class="value">
+              <i class="bi bi-envelope me-1"></i>
+              <a [href]="'mailto:' + data?.email">{{ data?.email || 'N/A' }}</a>
+            </span>
+          </div>
+
+          <div class="info-item" *ngIf="data?.phone">
+            <label>Phone</label>
+            <span class="value">
+              <i class="bi bi-telephone me-1"></i>
+              {{ data.phone }}
+            </span>
+          </div>
+
+          <div class="info-item" *ngIf="data?.country">
+            <label>Country</label>
+            <span class="value">
+              <i class="bi bi-geo-alt me-1"></i>
+              {{ data.country }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Info -->
+      <div class="info-section" *ngIf="data?.company || data?.role">
+        <h5 class="section-title">
+          <i class="bi bi-building me-2"></i>
+          Professional Details
+        </h5>
+        
+        <div class="info-grid">
+          <div class="info-item" *ngIf="data?.company">
+            <label>Company</label>
+            <span class="value">{{ data.company }}</span>
+          </div>
+
+          <div class="info-item" *ngIf="data?.role">
+            <label>Role</label>
+            <span class="value">{{ data.role }}</span>
+          </div>
+
+          <div class="info-item" *ngIf="data?.linkedin">
+            <label>LinkedIn</label>
+            <span class="value">
+              <i class="bi bi-linkedin me-1"></i>
+              <a [href]="data.linkedin" target="_blank">View Profile</a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Actions Section -->
+      <div class="info-section admin-section">
+        <h5 class="section-title">
+          <i class="bi bi-gear-fill me-2"></i>
+          Admin Actions
+        </h5>
+        
+        <div class="admin-form">
+          <div class="form-group mb-3">
+            <label for="status" class="form-label">Update Status</label>
+            <select 
+              id="status" 
+              class="form-select" 
+              [(ngModel)]="selectedStatus">
+              <option value="new">New</option>
+              <option value="in_progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="notes" class="form-label">Admin Notes</label>
+            <textarea 
+              id="notes" 
+              class="form-control" 
+              rows="4"
+              placeholder="Add notes about this contact..."
+              [(ngModel)]="adminNotes"></textarea>
+          </div>
+
+          <button 
+            class="btn btn-primary w-100" 
+            (click)="saveChanges()"
+            [disabled]="isSaving">
+            <i class="bi bi-save me-2"></i>
+            {{ isSaving ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Resolution Info -->
+      <div class="info-section" *ngIf="data?.resolvedAt">
+        <h5 class="section-title">
+          <i class="bi bi-check-circle me-2"></i>
+          Resolution
+        </h5>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Resolved At</label>
+            <span class="value">{{ formatDate(data?.resolvedAt) }}</span>
+          </div>
+
+          <div class="info-item" *ngIf="data?.handledBy">
+            <label>Handled By</label>
+            <span class="value">{{ data.handledBy }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-calendar-event me-2"></i>
+          Timeline
+        </h5>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Created At</label>
+            <span class="value">{{ formatDate(data?.createdAt) }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Last Updated</label>
+            <span class="value">{{ formatDate(data?.updatedAt) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-secondary" (click)="close()">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

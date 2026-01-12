@@ -11,13 +11,13 @@
             </a>
 
             <!-- Search bar -->
-            <form class="d-flex bg-light rounded border flex-shrink-1 me-2" role="search"
+            <!-- <form class="d-flex bg-light rounded border flex-shrink-1 me-2" role="search"
                 style="overflow: hidden; min-width: 100px; max-width: 300px;">
                 <input class="form-control border-0" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-light border-0" type="submit" style="color: var(--herfa-primary);">
                     <i class="bi bi-search"></i>
                 </button>
-            </form>
+            </form> -->
 
             <!-- Navbar toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -78,8 +78,10 @@
                     <!-- Profile trigger -->
                     <li *ngIf="loginService.isLoggedIn()" class="nav-item">
                         <a class="nav-link d-flex align-items-center" href="#" (click)="openModal($event)">
-                            <img src="https://img.freepik.com/free-vector/cat-mascot-black-isolated-illustration_18591-83411.jpg"
-                                class="rounded-circle me-2" width="32" height="32" alt="Admin" />
+                            <img [src]="getImageUrl((loginService.user$ | async)?.profile_picture)"
+                                class="rounded-circle me-2" width="32" height="32" alt="Admin" 
+                                onerror="this.src='/user-default-img.png'" 
+                                style="object-fit: cover;" />
                             <span class="text-dark">
                                 {{ loginService.getCurrentUser()?.username || 'Admin' }}
                             </span>
@@ -126,11 +128,12 @@
 
     <div class="modal-body">
       <!-- Profile Picture -->
-      <div class="text-center mb-4" *ngIf="(loginService.user$ | async)?.profile_picture">
-        <img [src]="(loginService.user$ | async)?.profile_picture" 
+      <div class="text-center mb-4">
+        <img [src]="getImageUrl((loginService.user$ | async)?.profile_picture)" 
              alt="Profile Picture" 
              class="profile-img rounded-circle shadow"
-             style="width: 120px; height: 120px; object-fit: cover;">
+             style="width: 120px; height: 120px; object-fit: cover;"
+             onerror="this.src='/user-default-img.png'">
       </div>
 
       <!-- Basic Info -->
@@ -193,7 +196,7 @@
           </div>
           <div class="stat-card">
             <i class="bi bi-star-fill text-warning"></i>
-            <div class="stat-value">{{ (loginService.user$ | async)?.averageRating || 0 }}</div>
+            <div class="stat-value">{{ (loginService.user$ | async)?.averageRating || 0 | number:'1.2-2' }}</div>
             <div class="stat-label">Average Rating</div>
           </div>
           <div class="stat-card">
@@ -203,7 +206,7 @@
           </div>
           <div class="stat-card">
             <i class="bi bi-currency-dollar text-info"></i>
-            <div class="stat-value">{{ (loginService.user$ | async)?.totalSpent || 0 }}</div>
+            <div class="stat-value">${{ (loginService.user$ | async)?.totalSpent || 0 | number:'1.2-2' }}</div>
             <div class="stat-label">Total Spent</div>
           </div>
         </div>
@@ -229,7 +232,7 @@
           </div>
           <div class="info-item" *ngIf="(loginService.user$ | async)?.balance !== undefined">
             <label>Balance</label>
-            <span class="text-success fw-bold">${{ (loginService.user$ | async)?.balance || 0 }}</span>
+            <span class="text-success fw-bold">${{ (loginService.user$ | async)?.balance || 0 | number:'1.2-2' }}</span>
           </div>
         </div>
       </div>

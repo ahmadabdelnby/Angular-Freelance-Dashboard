@@ -50,5 +50,9 @@ export const componentRegistry: {
   conversations: () => import('../core/cards2/conversationCard/conversation-card')
     .then(m => m.ConversationCard),
   payment: () => import('../core/cards2/payment-card/payment-card')
-    .then(m => m.PaymentCard)
+    .then(m => m.PaymentCard),
+  contacts: () => import('../core/cards2/contact-card/contact-card')
+    .then(m => m.ContactCard),
+  'activity-logs': () => import('../core/cards2/activity-log-card/activity-log-card')
+    .then(m => m.ActivityLogCard)
 };

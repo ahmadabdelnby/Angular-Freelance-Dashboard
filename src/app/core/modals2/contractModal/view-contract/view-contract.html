@@ -213,6 +213,72 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Admin Actions Section -->
+            <div class="info-section admin-actions-section" *ngIf="canPerformActions()">
+                <h5 class="section-title text-danger">
+                    <i class="bi bi-shield-lock me-2"></i>
+                    Admin Actions
+                </h5>
+                
+                <!-- Reason Input -->
+                <div class="mb-3">
+                    <label class="form-label">Reason (optional):</label>
+                    <input type="text" class="form-control" [(ngModel)]="actionReason" 
+                           placeholder="Enter reason for this action...">
+                </div>
+
+                <!-- Edit Amount Section -->
+                <div class="edit-amount-section mb-3" *ngIf="showEditAmount">
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" [(ngModel)]="newAmount" 
+                               min="0" step="0.01" placeholder="Enter new amount">
+                        <button class="btn btn-primary" (click)="adminUpdateAmount()" [disabled]="isLoading">
+                            <i class="bi bi-check-lg"></i> Save
+                        </button>
+                        <button class="btn btn-secondary" (click)="toggleEditAmount()">
+                            <i class="bi bi-x-lg"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="admin-action-buttons d-flex flex-wrap gap-2">
+                    <!-- Complete Contract -->
+                    <button class="btn btn-success" (click)="adminComplete()" [disabled]="isLoading">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Complete & Release Payment
+                    </button>
+
+                    <!-- Edit Amount -->
+                    <button class="btn btn-warning" (click)="toggleEditAmount()" [disabled]="isLoading" *ngIf="!showEditAmount">
+                        <i class="bi bi-pencil me-1"></i>
+                        Edit Amount
+                    </button>
+
+                    <!-- Cancel Contract -->
+                    <button class="btn btn-danger" (click)="adminCancel()" [disabled]="isLoading">
+                        <i class="bi bi-x-circle me-1"></i>
+                        Cancel & Refund Client
+                    </button>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div class="text-center mt-3" *ngIf="isLoading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Already Finalized Notice -->
+            <div class="info-section" *ngIf="!canPerformActions()">
+                <div class="alert" [ngClass]="data?.status === 'completed' ? 'alert-success' : 'alert-secondary'">
+                    <i class="bi" [ngClass]="data?.status === 'completed' ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                    This contract is <strong>{{ data?.status }}</strong> and cannot be modified.
+                </div>
+            </div>
         </div>
     </div>
 </div>

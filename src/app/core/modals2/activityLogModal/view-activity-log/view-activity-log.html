@@ -1,0 +1,121 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>
+        <i class="bi bi-activity me-2"></i>
+        Activity Log Details
+      </h2>
+      <button class="close-btn" (click)="close()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Action Info -->
+      <div class="action-section">
+        <span [ngClass]="getActionClass()">{{ data?.action | titlecase }}</span>
+        <small class="text-muted ms-3">{{ formatDate(data?.createdAt) }}</small>
+      </div>
+
+      <!-- Admin Info -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-person-fill me-2"></i>
+          Admin Information
+        </h5>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Username</label>
+            <span class="value">{{ data?.admin?.username || 'N/A' }}</span>
+          </div>
+          <div class="info-item">
+            <label>Email</label>
+            <span class="value">{{ data?.admin?.email || 'N/A' }}</span>
+          </div>
+          <div class="info-item" *ngIf="data?.admin?.first_name || data?.admin?.last_name">
+            <label>Name</label>
+            <span class="value">{{ data?.admin?.first_name }} {{ data?.admin?.last_name }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Entity Info -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-tag me-2"></i>
+          Entity Information
+        </h5>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Entity Type</label>
+            <span class="value">{{ data?.entityType | titlecase }}</span>
+          </div>
+          <div class="info-item" *ngIf="data?.entityId">
+            <label>Entity ID</label>
+            <span class="value monospace">{{ data?.entityId }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-file-text me-2"></i>
+          Description
+        </h5>
+        <p class="description-text">{{ data?.description || 'No description provided' }}</p>
+      </div>
+
+      <!-- Details -->
+      <div class="info-section" *ngIf="data?.details">
+        <h5 class="section-title">
+          <i class="bi bi-code me-2"></i>
+          Additional Details
+        </h5>
+        <pre class="details-code">{{ formatDetails() }}</pre>
+      </div>
+
+      <!-- Request Info -->
+      <div class="info-section" *ngIf="data?.ipAddress || data?.userAgent">
+        <h5 class="section-title">
+          <i class="bi bi-globe me-2"></i>
+          Request Information
+        </h5>
+        <div class="info-grid">
+          <div class="info-item" *ngIf="data?.ipAddress">
+            <label>IP Address</label>
+            <span class="value monospace">{{ data?.ipAddress }}</span>
+          </div>
+          <div class="info-item full-width" *ngIf="data?.userAgent">
+            <label>User Agent</label>
+            <span class="value small">{{ data?.userAgent }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timestamps -->
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-calendar-event me-2"></i>
+          Timestamps
+        </h5>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Created At</label>
+            <span class="value">{{ formatDate(data?.createdAt) }}</span>
+          </div>
+          <div class="info-item">
+            <label>Updated At</label>
+            <span class="value">{{ formatDate(data?.updatedAt) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="close()">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

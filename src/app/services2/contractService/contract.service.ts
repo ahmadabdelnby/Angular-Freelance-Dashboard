@@ -120,4 +120,31 @@ export class ContractService {
       headers: this.getHeaders()
     });
   }
+
+  /**
+   * Admin: Cancel contract and refund to client
+   */
+  adminCancelContract(id: string, reason?: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/admin/cancel`, { reason }, {
+      headers: this.getHeaders()
+    });
+  }
+
+  /**
+   * Admin: Update contract amount
+   */
+  adminUpdateContractAmount(id: string, newAmount: number, reason?: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/admin/update-amount`, { newAmount, reason }, {
+      headers: this.getHeaders()
+    });
+  }
+
+  /**
+   * Admin: Force complete contract and release payment
+   */
+  adminCompleteContract(id: string, reason?: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/admin/complete`, { reason }, {
+      headers: this.getHeaders()
+    });
+  }
 }

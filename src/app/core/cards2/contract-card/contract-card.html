@@ -18,10 +18,15 @@
       <strong>Freelancer:</strong> {{ data?.freelancer?.email || 'N/A' }}
     </p>
     
-    <!-- Active Status -->
+    <!-- Status Badge -->
     <div class="mb-3">
-      <span class="badge" [ngClass]="data?.isActive ? 'bg-success' : 'bg-secondary'">
-        {{ data?.isActive ? 'Active' : 'Inactive' }}
+      <span class="badge" [ngClass]="{
+        'bg-success': data?.status === 'active',
+        'bg-warning': data?.status === 'paused',
+        'bg-primary': data?.status === 'completed',
+        'bg-danger': data?.status === 'terminated' || data?.status === 'cancelled'
+      }">
+        {{ data?.status | titlecase }}
       </span>
     </div>
     

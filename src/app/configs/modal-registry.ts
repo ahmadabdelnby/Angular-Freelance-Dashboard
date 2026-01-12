@@ -59,4 +59,8 @@ export const ViewModalRegistry: {
     .then(m => m.ViewConversation),
   payment: () => import('../core/modals2/view-payment/view-payment')
     .then(m => m.ViewPayment),
+  contacts: () => import('../core/modals2/contactModal/view-contact/view-contact')
+    .then(m => m.ViewContact),
+  'activity-logs': () => import('../core/modals2/activityLogModal/view-activity-log/view-activity-log')
+    .then(m => m.ViewActivityLog),
 };

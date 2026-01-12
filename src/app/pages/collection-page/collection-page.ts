@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { CollectionService } from '../../services2/collectionService/collection-service';
+import { JobService } from '../../services2/jobService/job.service';
 import { componentRegistry } from '../../configs/cards-registry';
 import { ModalRegistry, ViewModalRegistry } from '../../configs/modal-registry';
 import { ToastService } from '../../services2/toastService/toast-service';
@@ -53,6 +54,7 @@ export class CollectionPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private collectionService: CollectionService,
+    private jobService: JobService,
     private injector: Injector,
     private toastService: ToastService
   ) {}
@@ -62,6 +64,7 @@ export class CollectionPage implements OnInit {
     this.actionRegistry['view'] = this.openViewModal.bind(this);
     this.actionRegistry['update'] = this.openUpdateModal.bind(this);
     this.actionRegistry['delete'] = this.confirmDelete.bind(this);
+    this.actionRegistry['cancel'] = this.confirmCancelJob.bind(this);
     
     // Get collection name from route
     this.route.params.subscribe(params => {
@@ -293,6 +296,32 @@ export class CollectionPage implements OnInit {
           this.toastService.error(`Failed to delete ${this.collectionName}`);
         }
       });
+  }
+
+  confirmCancelJob(doc: any) {
+    if (window.confirm('Are you sure you want to cancel this job? This will set its status to cancelled.')) {
+      this.cancelJob(doc);
+    }
+  }
+
+  cancelJob(doc: any) {
+    this.jobService.closeJob(doc._id || doc.id).subscribe({
+      next: (response) => {
+        // Update the job status in the local array
+        const index = this.documents.findIndex(d => (d._id || d.id) === (doc._id || doc.id));
+        if (index !== -1) {
+          this.documents[index] = { ...this.documents[index], status: 'cancelled' };
+          // Recreate the injector for the updated card
+          this.cardInjectors.delete(doc._id || doc.id);
+          this.applySearchAndPagination();
+        }
+        this.toastService.success('Job cancelled successfully!');
+      },
+      error: (err) => {
+        console.error('Cancel job error:', err);
+        this.toastService.error(err.error?.message || 'Failed to cancel job');
+      }
+    });
   }
   
   async loadComponent() {

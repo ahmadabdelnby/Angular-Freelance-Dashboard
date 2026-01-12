@@ -1,0 +1,38 @@
+<div class="card activity-log-card h-100 shadow-sm">
+  <div class="card-body">
+    <!-- Action Badge & Time -->
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <span class="badge" [ngClass]="getActionClass()">
+        <i [class]="getActionIcon() + ' me-1'"></i>
+        {{ data?.action | titlecase }}
+      </span>
+      <small class="text-muted">
+        {{ formatDate(data?.createdAt) }}
+      </small>
+    </div>
+    
+    <!-- Admin Info -->
+    <div class="admin-info mb-2">
+      <i class="bi bi-person-circle me-2 text-primary"></i>
+      <span class="fw-medium">{{ data?.admin?.username || data?.admin?.email || 'Unknown Admin' }}</span>
+    </div>
+    
+    <!-- Entity Type -->
+    <div class="entity-info mb-2">
+      <i class="bi bi-tag me-2 text-secondary"></i>
+      <span class="badge bg-light text-dark">{{ data?.entityType | titlecase }}</span>
+    </div>
+    
+    <!-- Description -->
+    <p class="description text-muted mb-3">
+      {{ data?.description || 'No description' }}
+    </p>
+    
+    <!-- Action Button -->
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-sm btn-outline-primary" (click)="view()">
+        <i class="bi bi-eye me-1"></i> View Details
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-job-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TitleCasePipe],
   templateUrl: './job-card.html',
   styleUrl: './job-card.scss',
 })
@@ -19,11 +19,10 @@ export class JobCard {
     this.onAction({ action: 'view', data: this.data });
   }
 
-
-  // Called when the Delete button is clicked
-  delete() {
-    // Emit the delete action to parent
-    this.onAction({ action: 'delete', data: this.data });
+  // Called when the Cancel button is clicked
+  cancel() {
+    // Emit the cancel action to parent
+    this.onAction({ action: 'cancel', data: this.data });
   }
 }
 

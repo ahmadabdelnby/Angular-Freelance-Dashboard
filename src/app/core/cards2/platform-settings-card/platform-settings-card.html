@@ -1,0 +1,151 @@
+<div class="settings-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading settings...</p>
+  </div>
+
+  <!-- Settings Form -->
+  <div *ngIf="!isLoading" class="settings-form">
+    <!-- Message Alert -->
+    <div *ngIf="message" class="alert" [ngClass]="{'alert-success': messageType === 'success', 'alert-danger': messageType === 'error'}">
+      {{ message }}
+    </div>
+
+    <!-- Commission Settings -->
+    <div class="settings-section">
+      <h5 class="section-title">
+        <i class="bi bi-percent me-2"></i>
+        Commission Settings
+      </h5>
+      <div class="settings-grid">
+        <div class="form-group">
+          <label>Commission Rate (%)</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.commissionRate" min="0" max="100">
+        </div>
+      </div>
+    </div>
+
+    <!-- Budget Limits -->
+    <div class="settings-section">
+      <h5 class="section-title">
+        <i class="bi bi-currency-dollar me-2"></i>
+        Budget Limits
+      </h5>
+      <div class="settings-grid">
+        <div class="form-group">
+          <label>Min Project Budget ($)</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.minProjectBudget" min="0">
+        </div>
+        <div class="form-group">
+          <label>Max Project Budget ($)</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.maxProjectBudget" min="0">
+        </div>
+        <div class="form-group">
+          <label>Min Withdrawal ($)</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.minWithdrawal" min="0">
+        </div>
+        <div class="form-group">
+          <label>Max Withdrawal ($)</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.maxWithdrawal" min="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Limits -->
+    <div class="settings-section">
+      <h5 class="section-title">
+        <i class="bi bi-sliders me-2"></i>
+        Platform Limits
+      </h5>
+      <div class="settings-grid">
+        <div class="form-group">
+          <label>Max Proposals Per Job</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.maxProposalsPerJob" min="1">
+        </div>
+        <div class="form-group">
+          <label>Max Active Jobs Per Client</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.maxActiveJobsPerClient" min="1">
+        </div>
+        <div class="form-group">
+          <label>Max Active Contracts Per Freelancer</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.maxActiveContractsPerFreelancer" min="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Time Limits -->
+    <div class="settings-section">
+      <h5 class="section-title">
+        <i class="bi bi-clock me-2"></i>
+        Time Limits (Days)
+      </h5>
+      <div class="settings-grid">
+        <div class="form-group">
+          <label>Proposal Expiration Days</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.proposalExpirationDays" min="1">
+        </div>
+        <div class="form-group">
+          <label>Contract Deadline Extension Days</label>
+          <input type="number" class="form-control" [(ngModel)]="settings.contractDeadlineExtensionDays" min="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Toggles -->
+    <div class="settings-section">
+      <h5 class="section-title">
+        <i class="bi bi-toggles me-2"></i>
+        Feature Toggles
+      </h5>
+      <div class="toggles-grid">
+        <div class="toggle-item">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="allowNewRegistrations" [(ngModel)]="settings.allowNewRegistrations">
+            <label class="form-check-label" for="allowNewRegistrations">
+              Allow New Registrations
+            </label>
+          </div>
+          <small class="text-muted">Enable/disable new user registration</small>
+        </div>
+        <div class="toggle-item">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="requireEmailVerification" [(ngModel)]="settings.requireEmailVerification">
+            <label class="form-check-label" for="requireEmailVerification">
+              Require Email Verification
+            </label>
+          </div>
+          <small class="text-muted">Users must verify email before using the platform</small>
+        </div>
+        <div class="toggle-item">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="enableWithdrawals" [(ngModel)]="settings.enableWithdrawals">
+            <label class="form-check-label" for="enableWithdrawals">
+              Enable Withdrawals
+            </label>
+          </div>
+          <small class="text-muted">Allow users to withdraw funds</small>
+        </div>
+        <div class="toggle-item danger">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="maintenanceMode" [(ngModel)]="settings.maintenanceMode">
+            <label class="form-check-label" for="maintenanceMode">
+              Maintenance Mode
+            </label>
+          </div>
+          <small class="text-danger">Platform will be unavailable to users</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <div class="save-section">
+      <button class="btn btn-primary btn-lg" (click)="saveSettings()" [disabled]="isSaving">
+        <i class="bi bi-save me-2"></i>
+        {{ isSaving ? 'Saving...' : 'Save Settings' }}
+      </button>
+    </div>
+  </div>
+</div>

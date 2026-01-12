@@ -32,7 +32,10 @@
                             <label>Freelancer:</label>
                             <span>
                                 <i class="bi bi-person-fill me-1"></i>
-                                {{ data?.freelancer?.email || 'N/A' }}
+                                {{ data?.freelancer?.first_name || '' }} {{ data?.freelancer?.last_name || '' }}
+                                <span class="text-muted small d-block" *ngIf="data?.freelancer?.email">
+                                    <i class="bi bi-envelope me-1"></i>{{ data?.freelancer?.email }}
+                                </span>
                             </span>
                         </div>
                     </div>
@@ -60,9 +63,10 @@
                 </h5>
                 <div class="row g-3">
                     <div class="col-md-4" *ngFor="let image of data?.images">
-                        <img [src]="image" 
+                        <img [src]="getImageUrl(image)" 
                              alt="Portfolio Image" 
                              class="img-fluid rounded shadow-sm"
+                             onerror="this.src='/user-default-img.png'"
                              style="width: 100%; height: 200px; object-fit: cover;">
                     </div>
                 </div>

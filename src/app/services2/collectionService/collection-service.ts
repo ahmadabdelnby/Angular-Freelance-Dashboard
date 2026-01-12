@@ -67,7 +67,10 @@ export class CollectionService {
       'contract': 'contracts',  // Map singular to plural
       'payment': 'payments',    // Map singular to plural
       'jobs': 'jobs/admin/all',  // Admin endpoint for all jobs
-      'payments': 'payments/admin/all'  // Admin endpoint for payments with full details
+      'payments': 'payments/admin/all',  // Admin endpoint for payments with full details
+      'contacts': 'contacts',  // Contact reports endpoint
+      'activity-logs': 'activity-logs',  // Activity logs endpoint
+      'platform-settings': 'platform-settings'  // Platform settings endpoint
     };
     
     // Some collections don't use /admin prefix
@@ -77,7 +80,8 @@ export class CollectionService {
       'payments',
       'payments', 'notifications', 'portfolio', 'users',
       'portfolioitems', 'conversations', 'messages', 'chat',
-      'favorites', 'chat/conversations'
+      'favorites', 'chat/conversations', 'contacts',
+      'activity-logs', 'platform-settings'
     ];
     
     // Get the actual endpoint name (with mapping if exists)
@@ -125,12 +129,18 @@ export class CollectionService {
           }
           
           // Try common property names including 'portfolioItems' (camelCase)
-          const commonKeys = ['data', 'items', 'results', 'portfolioItems', 'conversations'];
+          const commonKeys = ['data', 'items', 'results', 'portfolioItems', 'conversations', 'logs'];
           for (const key of commonKeys) {
             if (Array.isArray(response[key])) {
               console.log(`✅ Found array in response.${key}`);
               return response[key];
             }
+          }
+          
+          // For platform-settings, wrap single object in array
+          if (normalizedCollection === 'platform-settings') {
+            console.log('✅ Platform settings - wrapping single object in array');
+            return [response];
           }
         }
         
