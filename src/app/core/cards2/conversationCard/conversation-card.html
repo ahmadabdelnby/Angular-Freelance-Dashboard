@@ -20,10 +20,12 @@
         <i class="bi bi-envelope-fill me-1"></i>
         <span>Messages: {{ getMessageCount() }}</span>
       </div>
-      <div class="stat-item" *ngIf="document?.job">
-        <i class="bi bi-briefcase me-1"></i>
-        <span>{{ document?.job?.title }}</span>
-      </div>
+      @if (document?.job) {
+        <div class="stat-item">
+          <i class="bi bi-briefcase me-1"></i>
+          <span>{{ document?.job?.title }}</span>
+        </div>
+      }
     </div>
   </div>
 
