@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
-    apiUrl: 'http://localhost:3000/Freelancing/api/v1'
+    production: true,
+    apiUrl: 'https://herfa-api.onrender.com/Freelancing/api/v1'
 };
